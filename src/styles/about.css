@@ -1,0 +1,189 @@
+.about-page {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2.1vw, 2.5rem);
+  background: #000;
+  color: #f7f7f7;
+  overflow-x: clip;
+  container-type: inline-size;
+}
+
+/* Hero — massive page wordmark, edge-to-edge */
+.about-hero {
+  padding-top: clamp(1.5rem, 4vw, 3.5rem);
+  container-type: inline-size;
+}
+
+.about-kicker {
+  margin: 0 0 clamp(0.75rem, 1.5vw, 1.5rem);
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.78rem, 1.2vw, 1rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(247, 247, 247, 0.7);
+}
+
+.about-hero-word {
+  margin: 0;
+  margin-left: -0.03em;
+  margin-bottom: -0.08em;
+  width: 100%;
+  color: #f7f7f7;
+  font-family: "Gravelands", Impact, sans-serif;
+  font-size: clamp(5rem, 28.5vw, 60rem);
+  font-size: 29cqw;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+  text-align: left;
+  white-space: nowrap;
+  transform: scaleX(1.28);
+  transform-origin: left bottom;
+}
+
+.about-rule {
+  border-top: 1px dotted rgba(247, 247, 247, 0.28);
+  margin-top: 0.25rem;
+}
+
+.about-hero-sub {
+  margin: clamp(0.75rem, 1.5vw, 1.25rem) 0 0;
+  max-width: 36rem;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.82rem, 1.15vw, 1rem);
+  line-height: 1.5;
+  color: rgba(247, 247, 247, 0.85);
+}
+
+/* Intro — three small columns */
+.about-intro {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 3rem);
+  padding-block: clamp(2rem, 5vh, 3.5rem) clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.about-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+  line-height: 1.5;
+  color: rgba(247, 247, 247, 0.88);
+}
+
+.about-col p {
+  margin: 0;
+}
+
+.about-col p:first-child {
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  line-height: 1.35;
+  color: #f7f7f7;
+}
+
+.about-col-label {
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(247, 247, 247, 0.65);
+}
+
+/* Services — huge Geist Pixel capability list */
+.about-services {
+  padding-block: clamp(1.5rem, 3vh, 2.5rem) clamp(2rem, 6vh, 4rem);
+  position: relative;
+}
+
+.about-section-label {
+  margin: 0 0 clamp(1rem, 2vw, 2rem);
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(247, 247, 247, 0.75);
+}
+
+.about-capabilities {
+  margin: 0;
+  max-width: 100%;
+  color: #f7f7f7;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(2.2rem, 5.4vw, 5.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.about-note {
+  margin-top: clamp(1.25rem, 3vw, 2.5rem);
+  max-width: 22rem;
+  background: #f7f7f7;
+  color: #000;
+  padding: 0.9rem 1rem 1rem;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+  line-height: 1.45;
+}
+
+/* Values — four columns */
+.about-values {
+  border-top: 1px dotted rgba(247, 247, 247, 0.18);
+  padding-block: clamp(1.75rem, 4vh, 3rem) clamp(2rem, 5vh, 3.5rem);
+}
+
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 3rem);
+}
+
+.about-value h3 {
+  margin: 0 0 0.6rem;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.8rem, 1.05vw, 0.95rem);
+  line-height: 1.35;
+  font-weight: 400;
+  color: #f7f7f7;
+}
+
+.about-value h3 span {
+  font-weight: 700;
+}
+
+.about-value p {
+  margin: 0;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+  line-height: 1.5;
+  color: rgba(247, 247, 247, 0.85);
+}
+
+/* Tablet */
+@media (min-width: 701px) and (max-width: 1024px) {
+  .about-values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .about-page {
+    padding: 1.25rem;
+  }
+
+  .about-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .about-capabilities {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .about-values-grid {
+    grid-template-columns: 1fr;
+  }
+}

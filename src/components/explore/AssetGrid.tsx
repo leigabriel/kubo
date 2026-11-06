@@ -1,11 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLenis } from "lenis/react";
 import { assets, type Asset } from "@/data/assets";
 
 export function AssetGrid() {
   const [selected, setSelected] = useState<Asset | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const lenis = useLenis();
 
   useEffect(() => {
     let cancelled = false;
@@ -27,11 +29,13 @@ export function AssetGrid() {
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    lenis?.stop();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      lenis?.start();
     };
-  }, [selected, close]);
+  }, [selected, close, lenis]);
 
   return (
     <>
@@ -63,6 +67,7 @@ export function AssetGrid() {
       {selected && (
         <div
           className="asset-modal-backdrop"
+          data-lenis-prevent
           role="presentation"
           onClick={close}
         >

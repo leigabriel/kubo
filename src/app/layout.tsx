@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import "lenis/dist/lenis.css";
 import "@/styles/globals.css";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -21,7 +23,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   );
 }

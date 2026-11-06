@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { AssetGrid } from "@/components/explore/AssetGrid";
+import { PageMotion } from "@/components/motion/PageMotion";
 
 export const metadata: Metadata = {
   title: "Explore Assets — Kubo",
@@ -12,7 +13,7 @@ export default function ExplorePage() {
   return (
     <main className="explore-page" id="explore">
       <SiteHeader />
-      <div className="explore-subnav" aria-label="Collection">
+      <div className="explore-subnav" data-intro aria-label="Collection">
         <span>
           <Link href="/explore" aria-current="page">
             Grid
@@ -24,6 +25,7 @@ export default function ExplorePage() {
         </span>
       </div>
       <AssetGrid />
+      <PageMotion />
     </main>
   );
 }

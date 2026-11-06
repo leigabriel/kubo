@@ -1,8 +1,9 @@
 import Link from "next/link";
 
 const navigation = [
-  { label: "Explore Assets", href: "/explore" },
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
+  { label: "Explore", href: "/explore" },
 ];
 
 export function SiteHeader() {
@@ -27,9 +28,6 @@ export function SiteHeader() {
             {item.label}
           </Link>
         ))}
-        <Link className="sign-in-link" href="/sign-in">
-          Sign In
-        </Link>
       </nav>
     </header>
   );
