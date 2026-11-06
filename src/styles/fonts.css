@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Geist Pixel";
+  src: url("/fonts/geist-pixel.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gravelands";
+  src: url("/fonts/gravelands.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

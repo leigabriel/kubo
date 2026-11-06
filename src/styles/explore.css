@@ -1,0 +1,273 @@
+.explore-page {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2.1vw, 2.5rem);
+  background: #000;
+  color: #f7f7f7;
+}
+
+.explore-subnav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 3vh, 2.5rem) 0 clamp(1.5rem, 2vh, 2rem);
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+  letter-spacing: 0.02em;
+  color: rgba(247, 247, 247, 0.7);
+}
+
+.explore-subnav a {
+  transition: color 150ms ease;
+}
+
+.explore-subnav a:hover,
+.explore-subnav a[aria-current="page"] {
+  color: #f7f7f7;
+}
+
+.asset-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 3vw, 3rem);
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 clamp(0.5rem, 2vw, 3rem);
+  flex: 1;
+  align-content: start;
+}
+
+.asset-card {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+}
+
+.asset-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #0a0a0a;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.asset-thumb model-viewer {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+
+.asset-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(247, 247, 247, 0.12);
+  pointer-events: none;
+  transition: border-color 150ms ease;
+}
+
+.asset-card:hover .asset-thumb::after,
+.asset-card:focus-visible .asset-thumb::after {
+  border-color: rgba(247, 247, 247, 0.35);
+}
+
+.asset-card:focus-visible {
+  outline: 2px solid #f7f7f7;
+  outline-offset: 6px;
+}
+
+.asset-index {
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  color: rgba(247, 247, 247, 0.85);
+}
+
+.asset-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.75);
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+}
+
+.asset-modal {
+  position: relative;
+  width: min(880px, 100%);
+  max-height: min(90dvh, 720px);
+  overflow: auto;
+  background: #0d0d0d;
+  border: 1px solid rgba(247, 247, 247, 0.16);
+  color: #f7f7f7;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.asset-modal-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  color: #f7f7f7;
+  border: 1px solid rgba(247, 247, 247, 0.25);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.asset-modal-close:hover {
+  background: #f7f7f7;
+  color: #000;
+}
+
+.asset-modal-viewer {
+  min-height: 340px;
+  background: radial-gradient(circle at 50% 40%, #1a1a1a 0%, #050505 70%);
+  display: grid;
+  place-items: center;
+}
+
+.asset-modal-viewer model-viewer {
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+}
+
+.asset-modal-body {
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: auto;
+}
+
+.asset-modal-index {
+  margin: 0;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.9rem;
+  color: rgba(247, 247, 247, 0.6);
+}
+
+.asset-modal-body h2 {
+  margin: 0;
+  font-family: "Gravelands", Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+}
+
+.asset-modal-body > p {
+  margin: 0;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(247, 247, 247, 0.8);
+}
+
+.asset-modal-meta {
+  margin: 0.5rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(247, 247, 247, 0.14);
+  padding-top: 1rem;
+}
+
+.asset-modal-meta > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.85rem;
+}
+
+.asset-modal-meta dt {
+  color: rgba(247, 247, 247, 0.55);
+}
+
+.asset-modal-meta dd {
+  margin: 0;
+}
+
+.asset-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.asset-download,
+.asset-open {
+  flex: 1 1 160px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.95rem;
+  border: 1px solid #f7f7f7;
+  padding: 0.75rem 1rem;
+}
+
+.asset-download {
+  background: #f7f7f7;
+  color: #000;
+}
+
+.asset-download:hover {
+  opacity: 0.85;
+}
+
+.asset-open {
+  color: #f7f7f7;
+}
+
+.asset-open:hover {
+  background: rgba(247, 247, 247, 0.1);
+}
+
+@media (max-width: 1100px) {
+  .asset-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .asset-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1rem;
+    padding: 0;
+  }
+
+  .asset-modal {
+    grid-template-columns: 1fr;
+    max-height: 92dvh;
+  }
+
+  .asset-modal-viewer,
+  .asset-modal-viewer model-viewer {
+    min-height: 280px;
+  }
+}
