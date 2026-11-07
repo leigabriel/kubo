@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { AssetGrid } from "@/components/explore/AssetGrid";
 import { PageMotion } from "@/components/motion/PageMotion";
 
@@ -13,6 +14,7 @@ export default function ExplorePage() {
     <main className="explore-page" id="explore">
       <SiteHeader />
       <AssetGrid />
+      <SiteFooter />
       <PageMotion />
     </main>
   );
