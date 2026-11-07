@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer" data-reveal>
+    <footer className="site-footer">
       <p className="site-footer-by">BY KUBO</p>
       <p className="site-footer-word" aria-label="KUBO">
         KUBO
