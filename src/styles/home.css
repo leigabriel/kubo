@@ -2,85 +2,197 @@
   display: flex;
   min-height: 100svh;
   flex-direction: column;
-  overflow: hidden;
-  padding: clamp(1.25rem, 2.1vw, 2.5rem);
+  overflow-x: clip;
+  padding: var(--page-pad);
+  padding-top: 0;
   background: #000;
 }
 
 .site-header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  min-height: 2rem;
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+  height: var(--header-height);
+  min-height: var(--header-height);
+  padding: 0 var(--page-pad);
   background: transparent;
-  background-color: transparent;
-  background-image: none;
-  box-shadow: none;
   border: 0;
-  backdrop-filter: none;
+  box-shadow: none;
 }
 
-.brand-mark {
-  display: inline-flex;
-  width: clamp(1.65rem, 2vw, 2.15rem);
-  height: clamp(1.65rem, 2vw, 2.15rem);
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
+.site-brand {
+  justify-self: start;
+  min-width: 0;
+  overflow: hidden;
   color: #f7f7f7;
-  background: transparent;
-  background-color: transparent;
-  background-image: none;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.72rem, 0.95vw, 0.9rem);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    color 160ms ease,
+    opacity 160ms ease;
 }
 
-.brand-mark svg {
-  display: block;
-  width: 100%;
-  height: 100%;
+.site-brand:hover,
+.site-brand:focus-visible {
+  opacity: 0.65;
 }
 
 .primary-navigation {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: clamp(1.25rem, 2vw, 2.5rem);
+  justify-content: center;
+  justify-self: center;
+  gap: 0.15rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  background: #f7f7f7;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
   font-family: "Geist Pixel", monospace;
-  font-size: clamp(1rem, 1.65vw, 2rem);
+  font-size: clamp(0.72rem, 0.95vw, 0.9rem);
   line-height: 1;
-  background: transparent;
-  background-color: transparent;
-  background-image: none;
 }
 
 .primary-navigation a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.15rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  color: rgba(0, 0, 0, 0.58);
   white-space: nowrap;
-  transition: opacity 160ms ease;
-  background: transparent;
-  background-color: transparent;
-  background-image: none;
-  box-shadow: none;
-  border: 0;
-  backdrop-filter: none;
+  text-transform: uppercase;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    opacity 160ms ease;
 }
 
 .primary-navigation a:hover,
 .primary-navigation a:focus-visible {
-  opacity: 0.65;
+  color: #000;
+  background: rgba(0, 0, 0, 0.07);
 }
 
-.primary-navigation a:focus-visible,
-.brand-mark:focus-visible {
+.primary-navigation a.is-active {
+  color: #f7f7f7;
+  background: #000;
+}
+
+.primary-navigation a:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 3px;
+}
+
+.site-brand:focus-visible,
+.site-star:focus-visible {
   outline: 2px solid currentColor;
-  outline-offset: 6px;
+  outline-offset: 3px;
+}
+
+.site-star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  gap: 0.5rem;
+  min-height: 2.15rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(247, 247, 247, 0.14);
+  border-radius: 999px;
+  background: rgba(247, 247, 247, 0.045);
+  color: #f7f7f7;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.72rem, 0.95vw, 0.9rem);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.site-star:hover:not(:disabled),
+.site-star:focus-visible:not(:disabled) {
+  background: rgba(247, 247, 247, 0.1);
+  border-color: rgba(247, 247, 247, 0.3);
+}
+
+.site-header.is-light .site-brand {
+  color: #000;
+}
+
+.site-header.is-light .site-star {
+  color: #000;
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+.site-header.is-light .site-star:hover:not(:disabled),
+.site-header.is-light .site-star:focus-visible:not(:disabled) {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.32);
+}
+
+.site-star:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.site-star:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.site-star svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  transition: transform 160ms ease;
+}
+
+.site-star:hover:not(:disabled) svg {
+  transform: rotate(12deg) scale(1.08);
+}
+
+.site-star.is-starring svg {
+  animation: star-pop 480ms ease;
+}
+
+.site-star-count {
+  min-width: 1ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes star-pop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  35% {
+    transform: scale(1.35) rotate(18deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 /* HomeHero — massive bottom-anchored wordmark */
 .home-hero {
   display: flex;
   width: 100%;
+  min-height: 100svh;
   flex: 1;
   flex-direction: column;
   justify-content: flex-end;
@@ -135,45 +247,208 @@
   clip-path: inset(50%);
 }
 
+/* Home signature — editorial archive poster */
+.home-signature {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(1rem, 2vw, 2rem);
+  margin-top: 0;
+  margin-inline: calc(var(--page-pad) * -1);
+  margin-bottom: calc(var(--page-pad) * -1);
+  padding: calc(var(--header-height) + clamp(1rem, 2vw, 2rem))
+    var(--page-pad) var(--page-pad);
+  background: #f7f7f7;
+  color: #000;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.signature-meta {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.72rem, 1.35vw, 1.55rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.signature-meta span:first-child {
+  justify-self: start;
+  text-align: left;
+}
+
+.signature-meta span:nth-child(2) {
+  justify-self: center;
+  text-align: center;
+}
+
+.signature-meta span:last-child {
+  justify-self: end;
+  text-align: right;
+}
+
+.signature-main {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  align-content: center;
+  gap: clamp(1rem, 2.4vw, 3rem);
+  min-height: 0;
+}
+
+.signature-word {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1vw, 1.25rem);
+  color: #000;
+  font-family: "Gravelands", Impact, sans-serif;
+  font-size: clamp(4rem, 9.5vw, 11.4rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.8;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.signature-word-left {
+  justify-self: start;
+}
+
+.signature-word-right {
+  justify-self: end;
+}
+
+.signature-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: 0.82em;
+  height: 0.82em;
+  color: #000;
+}
+
+.signature-stage {
+  position: relative;
+  display: grid;
+  width: clamp(190px, 18vw, 340px);
+  aspect-ratio: 1;
+  place-items: center;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.signature-tilt {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.signature-tilt model-viewer {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  outline: none;
+  --poster-color: transparent;
+}
+
+.signature-tilt model-viewer:focus-visible {
+  outline: 1px solid rgba(0, 0, 0, 0.5);
+  outline-offset: 8px;
+}
+
 /* Tablet */
 @media (min-width: 701px) and (max-width: 1024px) {
+  .signature-word {
+    font-size: clamp(3.4rem, 8.2vw, 7.5rem);
+  }
+
+  .signature-stage {
+    width: clamp(180px, 20vw, 260px);
+  }
+
+  .signature-meta {
+    font-size: clamp(0.65rem, 1.2vw, 0.95rem);
+  }
+
   .primary-navigation {
-    gap: clamp(1rem, 2.5vw, 1.75rem);
-    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    gap: 0.1rem;
+    font-size: 0.78rem;
   }
 
   .primary-navigation a {
-    padding-block: 0.375rem;
+    padding: 0.5rem 0.7rem;
   }
 }
 
 /* Mobile */
 @media (max-width: 700px) {
-  .home-page {
-    min-height: 100svh;
-    padding: 1.25rem;
+  .home-signature {
+    gap: 0.75rem;
+    padding-top: calc(var(--header-height) + 1rem);
+  }
+
+  .signature-meta {
+    gap: 0.5rem;
+    font-size: clamp(0.55rem, 2.4vw, 0.72rem);
+  }
+
+  .signature-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(0.75rem, 3vw, 1.5rem);
+  }
+
+  .signature-word {
+    justify-content: center;
+    font-size: clamp(4rem, 19vw, 7rem);
+  }
+
+  .signature-stage {
+    width: min(68vw, 300px);
   }
 
   .site-header {
-    align-items: flex-start;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
-  .brand-mark {
-    width: 1.6rem;
-    height: 1.6rem;
-    margin-top: 0.5rem;
+  .site-brand {
+    font-size: clamp(0.6rem, 2.1vw, 0.68rem);
+    letter-spacing: 0.01em;
   }
 
   .primary-navigation {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.25rem 0.75rem;
-    font-size: clamp(0.8rem, 3.4vw, 1.05rem);
+    gap: 0;
+    padding: 0.2rem;
+    font-size: clamp(0.58rem, 2vw, 0.68rem);
   }
 
   .primary-navigation a {
-    padding: 0.625rem 0.25rem;
+    min-height: 1.9rem;
+    padding: 0.45rem 0.35rem;
+  }
+
+  .site-star {
+    min-height: 1.9rem;
+    gap: 0.35rem;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .site-star svg {
+    width: 0.85rem;
+    height: 0.85rem;
   }
 
   .hero-title {
@@ -185,13 +460,26 @@
 }
 
 @media (max-width: 380px) {
-  .home-page {
-    padding: 1rem;
+  .site-header {
+    gap: 0.4rem;
+  }
+
+  .site-brand {
+    font-size: 0.6rem;
+    letter-spacing: 0;
   }
 
   .primary-navigation {
-    gap: 0.25rem 0.5rem;
-    font-size: 0.78rem;
+    font-size: 0.58rem;
+  }
+
+  .primary-navigation a {
+    padding: 0.4rem 0.32rem;
+  }
+
+  .site-star {
+    padding: 0.3rem 0.4rem;
+    font-size: 0.65rem;
   }
 
   .hero-title {
