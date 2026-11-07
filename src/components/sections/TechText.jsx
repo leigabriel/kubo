@@ -8,6 +8,9 @@ const SPRING = 320;
 const INHERIT = /^(currentcolor|inherit)$/i;
 const INTRO_DELAY = 0.15;
 const KICK_DECAY = 0.62;
+// Firefox caps canvas glyph metrics once the font size exceeds ~2000px, so measure at a safe
+// reference size and scale the metrics linearly instead of measuring at huge font sizes.
+const MAX_MEASURE_SIZE = 1000;
 
 const approach = (current, target, dt, seconds) => current + (target - current) * (1 - Math.exp(-dt / seconds));
 
@@ -220,16 +223,29 @@ const TechText = ({
       }
 
       const probe = scratchCtx;
-      setFont(probe, s, s.fontSize);
-      let m = probe.measureText(s.text);
+      const measure = (size, value) => {
+        const probeSize = Math.min(size, MAX_MEASURE_SIZE);
+        const scale = size / probeSize;
+        setFont(probe, s, probeSize);
+        const metrics = probe.measureText(value);
+        if (scale === 1) return metrics;
+        return {
+          width: metrics.width * scale,
+          actualBoundingBoxLeft: metrics.actualBoundingBoxLeft * scale,
+          actualBoundingBoxRight: metrics.actualBoundingBoxRight * scale,
+          actualBoundingBoxAscent: metrics.actualBoundingBoxAscent * scale,
+          actualBoundingBoxDescent: metrics.actualBoundingBoxDescent * scale
+        };
+      };
+
+      let m = measure(s.fontSize, s.text);
       const fit = Math.min(
         1,
         (width * 1.0) / Math.max(m.actualBoundingBoxLeft + m.actualBoundingBoxRight, 1),
         (height * 0.98) / Math.max(m.actualBoundingBoxAscent + m.actualBoundingBoxDescent, 1)
       );
       const size = s.fontSize * fit;
-      setFont(probe, s, size);
-      m = probe.measureText(s.text);
+      m = measure(size, s.text);
       const inkWidth = m.actualBoundingBoxLeft + m.actualBoundingBoxRight;
       const margin = width * 0.05;
       const start =
@@ -237,10 +253,10 @@ const TechText = ({
       const x = start + m.actualBoundingBoxLeft;
       const bottomMargin = Math.max(16, width * 0.015);
       const baseline = height - bottomMargin - m.actualBoundingBoxDescent;
-      const xHeight = baseline - probe.measureText('x').actualBoundingBoxAscent;
-      const capHeight = baseline - probe.measureText('H').actualBoundingBoxAscent;
-      const ascender = baseline - probe.measureText('d').actualBoundingBoxAscent;
-      const descender = baseline + probe.measureText('p').actualBoundingBoxDescent;
+      const xHeight = baseline - measure(size, 'x').actualBoundingBoxAscent;
+      const capHeight = baseline - measure(size, 'H').actualBoundingBoxAscent;
+      const ascender = baseline - measure(size, 'd').actualBoundingBoxAscent;
+      const descender = baseline + measure(size, 'p').actualBoundingBoxDescent;
       const top = baseline - m.actualBoundingBoxAscent;
       const bottom = baseline + m.actualBoundingBoxDescent;
       const inkTop = Math.min(top, capHeight) - 2;
@@ -274,8 +290,8 @@ const TechText = ({
       let prefix = '';
       chars.forEach((char, i) => {
         prefix += char;
-        const own = probe.measureText(char);
-        const gx = x + probe.measureText(prefix).width - own.width;
+        const own = measure(size, char);
+        const gx = x + measure(size, prefix).width - own.width;
         if (!char.trim()) return;
         const base = {
           char,
