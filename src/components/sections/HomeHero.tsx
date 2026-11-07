@@ -15,7 +15,7 @@ export function HomeHero() {
           text="KUBO"
           fontFamily="'Gravelands', 'Impact', sans-serif"
           fontWeight={400}
-          fontSize={800}
+          fontSize={3000}
           letterSpacing={0.03}
           color="#f7f7f7"
           accentColor="#f7f7f7"
