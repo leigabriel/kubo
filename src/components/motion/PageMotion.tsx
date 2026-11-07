@@ -67,41 +67,6 @@ export function PageMotion() {
       });
     });
 
-    const capabilities = document.querySelector(".about-capabilities");
-    if (capabilities) {
-      gsap.fromTo(
-        capabilities,
-        { yPercent: 8 },
-        {
-          yPercent: -8,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".about-services",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 0.6,
-          },
-        },
-      );
-    }
-
-    const cards = gsap.utils.toArray<HTMLElement>(".asset-card");
-    if (cards.length > 0) {
-      gsap.set(cards, { autoAlpha: 0, y: 24 });
-      ScrollTrigger.batch(cards, {
-        start: "top 92%",
-        once: true,
-        onEnter: (batch) =>
-          gsap.to(batch, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power3.out",
-            stagger: 0.05,
-            overwrite: true,
-          }),
-      });
-    }
   });
 
   return null;
