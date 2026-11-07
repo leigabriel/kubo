@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { AboutArchiveBox } from "@/components/sections/AboutArchiveBox";
 import { PageMotion } from "@/components/motion/PageMotion";
 import { AboutMotion } from "@/components/motion/AboutMotion";
 
@@ -29,6 +30,7 @@ export default function AboutPage() {
   return (
     <main className="about-page" id="about">
       <SiteHeader />
+      <AboutArchiveBox />
       <PageMotion />
       <AboutMotion />
 
