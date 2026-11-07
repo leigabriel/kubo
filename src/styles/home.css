@@ -1,4 +1,5 @@
 .home-page {
+  position: relative;
   display: flex;
   min-height: 100svh;
   flex-direction: column;
@@ -201,6 +202,58 @@
   z-index: 10;
 }
 
+/* Shared archive box: starts here, travels into .signature-stage on scroll */
+.hero-model-anchor {
+  position: absolute;
+  top: calc(var(--header-height) + clamp(1rem, 4vh, 2.75rem));
+  left: 50%;
+  width: clamp(132px, 13vw, 220px);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.home-model {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  perspective: 1200px;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  transition: opacity 220ms ease;
+}
+
+.home-model.is-ready {
+  opacity: 1;
+}
+
+.home-model.is-settled {
+  pointer-events: auto;
+}
+
+.home-model-tilt {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.home-model-tilt model-viewer {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  outline: none;
+  --poster-color: transparent;
+}
+
+.home-model-tilt model-viewer:focus-visible {
+  outline: 1px solid rgba(0, 0, 0, 0.5);
+  outline-offset: 8px;
+}
+
 .hero-tech {
   width: 100%;
   height: 74svh;
@@ -257,19 +310,28 @@
   gap: clamp(1rem, 2vw, 2rem);
   margin-top: 0;
   margin-inline: calc(var(--page-pad) * -1);
-  margin-bottom: calc(var(--page-pad) * -1);
+  margin-bottom: 0;
   padding: calc(var(--header-height) + clamp(1rem, 2vw, 2rem))
     var(--page-pad) var(--page-pad);
   background: #f7f7f7;
   color: #000;
   overflow: clip;
-  isolation: isolate;
+}
+
+.signature-intro {
+  position: relative;
+  z-index: 31;
+  max-width: 36rem;
+  margin: 0;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.72rem, 1.35vw, 1.55rem);
+  line-height: 1.4;
 }
 
 .signature-meta {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
   gap: 1rem;
   font-family: "Geist Pixel", monospace;
   font-size: clamp(0.72rem, 1.35vw, 1.55rem);
@@ -279,18 +341,14 @@
   text-transform: uppercase;
 }
 
-.signature-meta span:first-child {
-  justify-self: start;
-  text-align: left;
+.signature-meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
 }
 
-.signature-meta span:nth-child(2) {
-  justify-self: center;
-  text-align: center;
-}
-
-.signature-meta span:last-child {
-  justify-self: end;
+.signature-meta-block-end {
+  align-items: flex-end;
   text-align: right;
 }
 
@@ -329,42 +387,16 @@
 .signature-mark {
   display: block;
   flex: 0 0 auto;
-  width: 0.82em;
-  height: 0.82em;
+  width: 0.735em;
+  height: 0.735em;
   color: #000;
+  transform: translateY(-0.016em);
 }
 
 .signature-stage {
   position: relative;
-  display: grid;
   width: clamp(190px, 18vw, 340px);
   aspect-ratio: 1;
-  place-items: center;
-  perspective: 1200px;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-.signature-tilt {
-  display: grid;
-  width: 100%;
-  height: 100%;
-  place-items: center;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-.signature-tilt model-viewer {
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  outline: none;
-  --poster-color: transparent;
-}
-
-.signature-tilt model-viewer:focus-visible {
-  outline: 1px solid rgba(0, 0, 0, 0.5);
-  outline-offset: 8px;
 }
 
 /* Tablet */
@@ -485,6 +517,302 @@
   .hero-title {
     font-size: 32.5vw;
     font-size: 36.8cqw;
+  }
+}
+
+/* Home archive — editorial index */
+.home-archive {
+  position: relative;
+  padding-top: clamp(6rem, 16vh, 12rem);
+  padding-bottom: clamp(4rem, 10vh, 8rem);
+  color: #f7f7f7;
+}
+
+.archive-mark-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  padding-bottom: clamp(1rem, 2vw, 2rem);
+  text-align: center;
+}
+
+.archive-kicker {
+  margin: 0;
+  color: rgba(247, 247, 247, 0.5);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.archive-mark {
+  display: block;
+  width: clamp(9rem, 26vw, 24rem);
+  height: auto;
+  color: #f7f7f7;
+  transform: rotate(-3deg);
+}
+
+.archive-lede {
+  max-width: 34rem;
+  margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;
+  color: rgba(247, 247, 247, 0.64);
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.8rem, 1.05vw, 0.98rem);
+  line-height: 1.55;
+  text-align: center;
+}
+
+.archive-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: clamp(4rem, 10vh, 8rem);
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(247, 247, 247, 0.18);
+  color: rgba(247, 247, 247, 0.5);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.archive-head p {
+  margin: 0;
+}
+
+.archive-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: #f7f7f7;
+  transition: opacity 160ms ease;
+}
+
+.archive-explore span {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+
+.archive-explore:hover,
+.archive-explore:focus-visible {
+  opacity: 0.65;
+}
+
+.archive-explore:hover span,
+.archive-explore:focus-visible span {
+  transform: translate(0.15em, -0.15em);
+}
+
+.archive-explore:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2vw, 2rem) clamp(0.75rem, 1.5vw, 1.5rem);
+  margin-top: clamp(1.25rem, 2vw, 2rem);
+}
+
+.archive-card {
+  min-width: 0;
+}
+
+.archive-card-link {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  color: inherit;
+}
+
+.archive-card-link:focus-visible {
+  outline: 2px solid #f7f7f7;
+  outline-offset: 4px;
+}
+
+.archive-card-visual {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #dedede;
+  color: #000;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.archive-card-link:hover .archive-card-visual {
+  transform: scale(1.012);
+}
+
+.archive-visual-type {
+  background: #111;
+  color: #f7f7f7;
+}
+
+.archive-visual-index {
+  background: #efefef;
+  color: #000;
+}
+
+.archive-visual-motion {
+  background: #8b8b8b;
+  color: #f7f7f7;
+}
+
+.archive-visual-label {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 2;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.archive-visual-cube,
+.archive-visual-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64%;
+  height: 64%;
+  transform: translate(-50%, -50%);
+}
+
+.archive-visual-orbit {
+  width: 76%;
+  height: 76%;
+}
+
+.archive-type-sample {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Gravelands", Impact, sans-serif;
+  font-size: 62cqw;
+  font-weight: 400;
+  letter-spacing: -0.08em;
+  line-height: 0.8;
+  transform: translateY(0.05em);
+}
+
+.archive-index-field {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 1px, transparent 1px);
+  background-size: 12.5% 12.5%;
+}
+
+.archive-pixel-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 42%;
+  height: 42%;
+  color: #000;
+  transform: translate(-50%, -50%);
+}
+
+.archive-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding-top: 0.9rem;
+}
+
+.archive-card-index,
+.archive-card-meta {
+  color: rgba(247, 247, 247, 0.42);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.archive-card-title {
+  margin: 0;
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.95rem, 1.1vw, 1.12rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.archive-card-link:hover .archive-card-title {
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+.archive-card-description {
+  margin: 0;
+  color: rgba(247, 247, 247, 0.62);
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.76rem, 0.88vw, 0.86rem);
+  line-height: 1.5;
+}
+
+.archive-card-meta {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  color: rgba(247, 247, 247, 0.36);
+}
+
+@media (max-width: 1024px) {
+  .archive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .archive-mark {
+    width: clamp(8rem, 28vw, 16rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .home-archive {
+    padding-top: clamp(4.5rem, 12vh, 7rem);
+    padding-bottom: clamp(3.5rem, 8vh, 6rem);
+  }
+
+  .archive-mark {
+    width: clamp(7rem, 32vw, 11rem);
+  }
+
+  .archive-lede {
+    max-width: 28rem;
+  }
+
+  .archive-head {
+    margin-top: clamp(3rem, 8vh, 5rem);
+  }
+
+  .archive-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .archive-card-visual {
+    aspect-ratio: 4 / 3;
+  }
+
+  .archive-card-title {
+    font-size: 1rem;
   }
 }
 
