@@ -24,6 +24,8 @@ const views: { id: ExploreView; label: string }[] = [
   { id: "list", label: "List" },
 ];
 
+const MODAL_CLOSE_DURATION = 200;
+
 function AssetThumb({ asset }: { asset: Asset }) {
   return (
     <span className="asset-thumb">
@@ -43,10 +45,14 @@ function AssetThumb({ asset }: { asset: Asset }) {
 export function AssetGrid() {
   const [items, setItems] = useState<Asset[]>(assets);
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState<ExploreView>("grid");
+  const [view, setView] = useState<ExploreView>("gallery");
   const [selected, setSelected] = useState<Asset | null>(null);
+  const [previewId, setPreviewId] = useState<string | null>(null);
+  const [isClosing, setIsClosing] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
   const collectionRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<number | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const lenis = useLenis();
 
   useEffect(() => {
@@ -107,7 +113,36 @@ export function AssetGrid() {
     { dependencies: [items, view], scope: collectionRef },
   );
 
-  const close = useCallback(() => setSelected(null), []);
+  const open = useCallback((asset: Asset, trigger?: HTMLElement) => {
+    triggerRef.current = trigger ?? null;
+
+    if (closeTimer.current !== null) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+
+    setIsClosing(false);
+    setSelected(asset);
+  }, []);
+
+  const close = useCallback(() => {
+    if (closeTimer.current !== null) return;
+
+    setIsClosing(true);
+    closeTimer.current = window.setTimeout(() => {
+      setSelected(null);
+      setIsClosing(false);
+      closeTimer.current = null;
+    }, MODAL_CLOSE_DURATION);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current !== null) {
+        window.clearTimeout(closeTimer.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!selected) return;
@@ -124,6 +159,13 @@ export function AssetGrid() {
       lenis?.start();
     };
   }, [selected, close, lenis]);
+
+  useEffect(() => {
+    if (!selected && triggerRef.current) {
+      triggerRef.current.focus();
+      triggerRef.current = null;
+    }
+  }, [selected]);
 
   const emptyState =
     loading && items.length === 0 ? (
@@ -148,7 +190,10 @@ export function AssetGrid() {
               <button
                 type="button"
                 aria-pressed={view === item.id}
-                onClick={() => setView(item.id)}
+                onClick={() => {
+                  setPreviewId(null);
+                  setView(item.id);
+                }}
               >
                 {item.label}
               </button>
@@ -165,7 +210,7 @@ export function AssetGrid() {
               type="button"
               className="asset-card"
               data-asset-item
-              onClick={() => setSelected(asset)}
+              onClick={(event) => open(asset, event.currentTarget)}
               aria-label={`Open ${asset.title}`}
             >
               <AssetThumb asset={asset} />
@@ -184,7 +229,7 @@ export function AssetGrid() {
               type="button"
               className="asset-gallery-item"
               data-asset-item
-              onClick={() => setSelected(asset)}
+              onClick={(event) => open(asset, event.currentTarget)}
               aria-label={`Open ${asset.title}`}
             >
               <AssetThumb asset={asset} />
@@ -211,10 +256,42 @@ export function AssetGrid() {
               type="button"
               className="asset-row"
               data-asset-item
-              onClick={() => setSelected(asset)}
+              onClick={(event) => open(asset, event.currentTarget)}
+              onPointerEnter={(event) => {
+                if (event.pointerType !== "touch") setPreviewId(asset.id);
+              }}
+              onPointerLeave={() =>
+                setPreviewId((current) =>
+                  current === asset.id ? null : current,
+                )
+              }
+              onFocus={() => setPreviewId(asset.id)}
+              onBlur={() =>
+                setPreviewId((current) =>
+                  current === asset.id ? null : current,
+                )
+              }
               aria-label={`Open ${asset.title}`}
             >
-              <span className="asset-row-index">{asset.index}</span>
+              <span className="asset-row-index">
+                <span className="asset-row-index-label">{asset.index}</span>
+                {previewId === asset.id && (
+                  <span className="asset-row-preview" aria-hidden="true">
+                    <model-viewer
+                      src={getAssetUrl(asset)}
+                      alt=""
+                      camera-orbit="20deg 75deg auto"
+                      interaction-prompt="none"
+                      loading="eager"
+                      auto-rotate
+                      auto-rotate-delay="0"
+                      rotation-per-second="35deg"
+                      shadow-intensity="0.6"
+                      exposure="1.05"
+                    />
+                  </span>
+                )}
+              </span>
               <span className="asset-row-title">{asset.title}</span>
               <span className="asset-row-meta">
                 {asset.format} · {asset.sizeMB.toFixed(1)} MB
@@ -230,7 +307,7 @@ export function AssetGrid() {
 
       {selected && (
         <div
-          className="asset-modal-backdrop"
+          className={`asset-modal-backdrop${isClosing ? " is-closing" : ""}`}
           data-lenis-prevent
           role="presentation"
           onClick={close}
@@ -260,6 +337,8 @@ export function AssetGrid() {
                 camera-orbit="20deg 75deg auto"
                 camera-controls="camera-controls"
                 auto-rotate
+                auto-rotate-delay="0"
+                rotation-per-second="28deg"
                 interaction-prompt="auto"
                 shadow-intensity="0.8"
                 exposure="1.05"
