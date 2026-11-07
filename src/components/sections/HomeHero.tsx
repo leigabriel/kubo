@@ -7,6 +7,7 @@ const TechText = dynamic(() => import("./TechText"), { ssr: false });
 export function HomeHero() {
   return (
     <section className="home-hero" data-intro aria-labelledby="hero-title">
+      <div className="hero-model-anchor" aria-hidden="true" />
       <h1 className="hero-title sr-only" id="hero-title">
         KUBO
       </h1>
