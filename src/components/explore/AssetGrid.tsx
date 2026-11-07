@@ -12,6 +12,7 @@ import {
   getAssetUrl,
   type Asset,
 } from "@/data/assets";
+import { loadModelViewer } from "@/lib/model-viewer";
 
 gsap.registerPlugin(useGSAP);
 
@@ -49,7 +50,7 @@ export function AssetGrid() {
   const lenis = useLenis();
 
   useEffect(() => {
-    import("@google/model-viewer").catch((error) => {
+    loadModelViewer().catch((error) => {
       console.error("Model viewer failed to load", error);
     });
   }, []);
