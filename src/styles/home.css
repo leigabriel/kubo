@@ -523,12 +523,43 @@
 /* Home archive — editorial index */
 .home-archive {
   position: relative;
+  isolation: isolate;
   padding-top: clamp(6rem, 16vh, 12rem);
   padding-bottom: clamp(4rem, 10vh, 8rem);
   color: #f7f7f7;
 }
 
+.home-archive::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(
+      38% 32% at 50% 16%,
+      rgba(255, 140, 207, 0.18),
+      transparent 72%
+    ),
+    radial-gradient(
+      32% 30% at 10% 56%,
+      rgba(255, 154, 77, 0.13),
+      transparent 72%
+    ),
+    radial-gradient(
+      36% 34% at 90% 60%,
+      rgba(185, 155, 255, 0.16),
+      transparent 72%
+    );
+  pointer-events: none;
+}
+
+.home-archive > * {
+  position: relative;
+  z-index: 1;
+}
+
 .archive-mark-wrap {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -566,6 +597,7 @@
 }
 
 .archive-head {
+  position: relative;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -573,13 +605,27 @@
   flex-wrap: wrap;
   margin-top: clamp(4rem, 10vh, 8rem);
   padding-top: 0.85rem;
-  border-top: 1px solid rgba(247, 247, 247, 0.18);
   color: rgba(247, 247, 247, 0.5);
   font-family: "Geist Pixel", monospace;
   font-size: 0.68rem;
   letter-spacing: 0.06em;
   line-height: 1.2;
   text-transform: uppercase;
+}
+
+.archive-head::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 154, 77, 0.75),
+    rgba(255, 140, 207, 0.85) 34%,
+    rgba(185, 155, 255, 0.65) 66%,
+    rgba(255, 138, 61, 0.5)
+  );
+  pointer-events: none;
 }
 
 .archive-head p {
@@ -623,6 +669,23 @@
 
 .archive-card {
   min-width: 0;
+  --card-glow: rgba(255, 140, 207, 0.24);
+}
+
+.archive-card:nth-child(1) {
+  --card-glow: rgba(255, 154, 77, 0.3);
+}
+
+.archive-card:nth-child(2) {
+  --card-glow: rgba(255, 140, 207, 0.3);
+}
+
+.archive-card:nth-child(3) {
+  --card-glow: rgba(185, 155, 255, 0.3);
+}
+
+.archive-card:nth-child(4) {
+  --card-glow: rgba(255, 138, 61, 0.28);
 }
 
 .archive-card-link {
@@ -645,26 +708,57 @@
   container-type: inline-size;
   background: #dedede;
   color: #000;
-  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.archive-card-link:hover .archive-card-visual {
+.archive-card-link:hover .archive-card-visual,
+.archive-card-link:focus-visible .archive-card-visual {
   transform: scale(1.012);
+  box-shadow: 0 24px 70px var(--card-glow);
 }
 
 .archive-visual-type {
-  background: #111;
+  background:
+    radial-gradient(
+      90% 70% at 24% 12%,
+      rgba(255, 140, 207, 0.2),
+      transparent 64%
+    ),
+    linear-gradient(155deg, #1c101f 0%, #080808 62%, #150b18 100%);
   color: #f7f7f7;
 }
 
+.archive-visual-object {
+  background: linear-gradient(
+    145deg,
+    #ffd2a0 0%,
+    #ff9ad0 52%,
+    #c9b0ff 100%
+  );
+  color: #160a16;
+}
+
 .archive-visual-index {
-  background: #efefef;
+  background: linear-gradient(
+    145deg,
+    #ffe0b8 0%,
+    #ffc2e4 46%,
+    #cdb6ff 100%
+  );
   color: #000;
 }
 
 .archive-visual-motion {
-  background: #8b8b8b;
-  color: #f7f7f7;
+  background:
+    radial-gradient(
+      55% 48% at 76% 22%,
+      rgba(255, 176, 110, 0.6),
+      transparent 66%
+    ),
+    linear-gradient(160deg, #2b1538 0%, #0b0a12 64%, #171022 100%);
+  color: #ffd0a3;
 }
 
 .archive-visual-label {
@@ -701,12 +795,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: transparent;
+  background-image: linear-gradient(
+    135deg,
+    #ffbd7a 0%,
+    #ff8ccf 34%,
+    #b99bff 64%,
+    #ff8a3d 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
   font-family: "Gravelands", Impact, sans-serif;
   font-size: 62cqw;
   font-weight: 400;
   letter-spacing: -0.08em;
   line-height: 0.8;
   transform: translateY(0.05em);
+  filter: drop-shadow(0 0 34px rgba(255, 140, 207, 0.32));
 }
 
 .archive-index-field {
@@ -744,6 +849,22 @@
   letter-spacing: 0.08em;
   line-height: 1.2;
   text-transform: uppercase;
+}
+
+.archive-card:nth-child(1) .archive-card-index {
+  color: #ffb877;
+}
+
+.archive-card:nth-child(2) .archive-card-index {
+  color: #ff8ccf;
+}
+
+.archive-card:nth-child(3) .archive-card-index {
+  color: #c7a5ff;
+}
+
+.archive-card:nth-child(4) .archive-card-index {
+  color: #ff9a5f;
 }
 
 .archive-card-title {
