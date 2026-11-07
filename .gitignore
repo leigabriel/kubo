@@ -30,8 +30,28 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
+
+# local-only tooling, migrations, and model staging (not committed)
+*scripts
+*models
+*supabase
+# keep the browser Supabase client in version control
+!src/lib/supabase/
+!src/lib/supabase/**
+
+# Next.js generated agent instructions
+AGENTS.md
+
+# models live in Supabase Storage, never in Git
+*.glb
+*.gltf
+*.fbx
+*.obj
+*.stl
+*.ply
+*.usdz
 
 # vercel
 .vercel
