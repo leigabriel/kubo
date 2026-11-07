@@ -139,8 +139,8 @@
 /* Gallery */
 .asset-gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(2.5rem, 5vw, 5rem) clamp(1.5rem, 3vw, 3rem);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3.5rem) clamp(1rem, 2vw, 2rem);
   width: 100%;
   flex: 1;
   align-content: start;
@@ -188,13 +188,13 @@
 .asset-gallery-index,
 .asset-gallery-meta {
   font-family: "Geist Pixel", monospace;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: rgba(247, 247, 247, 0.55);
 }
 
 .asset-gallery-title {
   font-family: "Gravelands", Impact, sans-serif;
-  font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+  font-size: clamp(1.15rem, 1.65vw, 1.9rem);
   letter-spacing: -0.01em;
   line-height: 0.95;
 }
@@ -242,6 +242,52 @@
   outline-offset: 4px;
 }
 
+.asset-row-index {
+  position: relative;
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid transparent;
+}
+
+.asset-row-index-label {
+  transition: opacity 160ms ease;
+}
+
+.asset-row-preview {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border: 1px solid rgba(247, 247, 247, 0.24);
+  background: #0a0a0a;
+  animation: asset-preview-in 220ms ease both;
+}
+
+.asset-row-preview model-viewer {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+
+.asset-row:hover .asset-row-index-label,
+.asset-row:focus-visible .asset-row-index-label {
+  opacity: 0;
+}
+
+@keyframes asset-preview-in {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .asset-row-index,
 .asset-row-meta,
 .asset-row-arrow {
@@ -277,40 +323,95 @@
   position: fixed;
   inset: 0;
   z-index: 50;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.78);
   display: grid;
   place-items: center;
-  padding: 1.25rem;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  animation: asset-backdrop-in 220ms ease both;
+}
+
+.asset-modal-backdrop.is-closing {
+  animation: asset-backdrop-out 200ms ease both;
+}
+
+.asset-modal-backdrop.is-closing .asset-modal {
+  animation: asset-modal-out 200ms ease both;
+}
+
+@keyframes asset-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes asset-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .asset-modal {
   position: relative;
-  width: min(880px, 100%);
-  max-height: min(90dvh, 720px);
-  overflow: auto;
+  width: min(1040px, 100%);
+  height: min(88dvh, 880px);
+  max-height: 94dvh;
+  overflow: hidden;
   background: #0d0d0d;
   border: 1px solid rgba(247, 247, 247, 0.16);
   color: #f7f7f7;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: 0;
+  animation: asset-modal-in 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes asset-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes asset-modal-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
 }
 
 .asset-modal-close {
   position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  z-index: 2;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
   width: 44px;
   height: 44px;
   display: grid;
   place-items: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(8px);
   color: #f7f7f7;
-  border: 1px solid rgba(247, 247, 247, 0.25);
+  border: 1px solid rgba(247, 247, 247, 0.3);
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
 }
 
 .asset-modal-close:hover {
@@ -318,17 +419,25 @@
   color: #000;
 }
 
+.asset-modal-close:focus-visible {
+  outline: 2px solid #f7f7f7;
+  outline-offset: 3px;
+}
+
 .asset-modal-viewer {
-  min-height: 340px;
+  min-width: 0;
+  min-height: 0;
   background: radial-gradient(circle at 50% 40%, #1a1a1a 0%, #050505 70%);
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
 .asset-modal-viewer model-viewer {
   width: 100%;
   height: 100%;
-  min-height: 340px;
+  min-height: 0;
+  background: transparent;
 }
 
 .asset-modal-body {
@@ -336,7 +445,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  overflow: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .asset-modal-index {
@@ -431,7 +541,7 @@
   }
 
   .asset-gallery {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -443,13 +553,26 @@
   }
 
   .asset-gallery {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1rem;
     padding: 0;
   }
 
   .asset-gallery-item .asset-thumb {
     aspect-ratio: 1 / 1;
+  }
+
+  .asset-gallery-title {
+    font-size: 1.1rem;
+  }
+
+  .asset-gallery-heading {
+    gap: 0.45rem;
+  }
+
+  .asset-gallery-index,
+  .asset-gallery-meta {
+    font-size: 0.64rem;
   }
 
   .asset-list {
@@ -462,6 +585,11 @@
     padding-block: 0.9rem;
   }
 
+  .asset-row-index {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
   .asset-row-meta {
     display: none;
   }
@@ -471,12 +599,29 @@
   }
 
   .asset-modal {
+    height: min(92dvh, 900px);
+    max-height: 94dvh;
     grid-template-columns: 1fr;
-    max-height: 92dvh;
+    grid-template-rows: minmax(220px, 44%) minmax(0, 1fr);
   }
 
   .asset-modal-viewer,
   .asset-modal-viewer model-viewer {
-    min-height: 280px;
+    min-height: 0;
+  }
+
+  .asset-modal-body {
+    overflow-y: auto;
+  }
+
+  .asset-modal-close {
+    top: 0.55rem;
+    right: 0.55rem;
+  }
+}
+
+@media (hover: none) {
+  .asset-row-preview {
+    display: none;
   }
 }
