@@ -166,7 +166,7 @@ export function SiteHeader() {
       className={`site-header${isLight ? " is-light" : ""}`}
     >
       <Link className="site-brand" href="/" aria-label="Kubo Archive home">
-        Kubo Archive
+        K.A
       </Link>
 
       <nav className="primary-navigation" aria-label="Main navigation">
