@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { PageMotion } from "@/components/motion/PageMotion";
+import { AboutMotion } from "@/components/motion/AboutMotion";
 
 export const metadata: Metadata = {
   title: "About — Kubo",
@@ -9,14 +10,30 @@ export const metadata: Metadata = {
     "Kubo is a creative digital space for discovering, organizing, and exploring digital assets through a simple, immersive experience.",
 };
 
+const capabilities = [
+  "Search and Discover",
+  "Sort and Organize",
+  "3D and Motion",
+  "Visual and Brand Identity",
+  "Image and Photography",
+  "Video and Sound",
+  "Texture and Material",
+  "Type and Typography",
+  "Prototype and UI/UX",
+  "Curate",
+  "Collect",
+  "Share and Build",
+];
+
 export default function AboutPage() {
   return (
     <main className="about-page" id="about">
       <SiteHeader />
       <PageMotion />
+      <AboutMotion />
 
       {/* Hero — massive page wordmark, no imagery */}
-      <section className="about-hero" data-intro aria-labelledby="about-title">
+      <section className="about-hero" aria-labelledby="about-title">
         <p className="about-kicker">A creative digital space</p>
         <h1 className="about-hero-word" id="about-title" aria-label="About">
           About
@@ -30,7 +47,7 @@ export default function AboutPage() {
       </section>
 
       {/* Intro — three columns, small text */}
-      <section className="about-intro" data-reveal aria-label="About Kubo">
+      <section className="about-intro" aria-label="About Kubo">
         <div className="about-col">
           <p className="about-col-label">What is Kubo — 01 / 03</p>
           <p>
@@ -75,19 +92,17 @@ export default function AboutPage() {
       </section>
 
       {/* Services — huge Geist Pixel capability list, no images */}
-      <section
-        className="about-services"
-        data-reveal
-        aria-labelledby="about-services-title"
-      >
+      <section className="about-services" aria-labelledby="about-services-title">
         <p className="about-section-label" id="about-services-title">
           What Kubo does
         </p>
         <p className="about-capabilities">
-          Search and Discover, Sort and Organize, 3D and Motion, Visual and
-          Brand Identity, Image and Photography, Video and Sound, Texture and
-          Material, Type and Typography, Prototype and UI/UX, Curate, Collect,
-          Share and Build
+          {capabilities.map((capability, index) => (
+            <span className="about-capability" key={capability}>
+              {capability}
+              {index < capabilities.length - 1 ? ", " : ""}
+            </span>
+          ))}
         </p>
         <aside className="about-note">
           Every asset in Kubo is unique as the people who made it. When
@@ -101,7 +116,7 @@ export default function AboutPage() {
         <p className="about-section-label" id="about-values-title">
           How Kubo works
         </p>
-        <div className="about-values-grid" data-reveal-group>
+        <div className="about-values-grid">
           <div className="about-value">
             <h3>
               <span>No Fluff.</span>
