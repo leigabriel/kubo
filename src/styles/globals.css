@@ -6,6 +6,8 @@
 @import "./footer.css";
 
 :root {
+  --page-pad: clamp(1.25rem, 2.1vw, 2.5rem);
+  --header-height: 4.75rem;
   color-scheme: dark;
   background: #000;
   color: #f7f7f7;
@@ -14,6 +16,20 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 700px) {
+  :root {
+    --page-pad: 1.25rem;
+    --header-height: 3.75rem;
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --page-pad: 1rem;
+    --header-height: 3.5rem;
+  }
 }
 
 * {
@@ -25,6 +41,7 @@ html {
   min-height: 100%;
   background: #000;
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
   overflow-x: clip;
 }
 
