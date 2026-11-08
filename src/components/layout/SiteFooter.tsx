@@ -31,7 +31,11 @@ const footerNavigation = [
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer" data-header-theme="light">
+    <footer
+      className="site-footer"
+      data-header-theme="light"
+      data-home-section="footer"
+    >
       <nav className="site-footer-directory" aria-label="Footer">
         {footerNavigation.map((group) => (
           <div className="site-footer-column" key={group.title}>
