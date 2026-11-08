@@ -625,3 +625,428 @@
     display: none;
   }
 }
+
+/* Pixel playground — full-page drawing canvas */
+.pixel-playground-page {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  padding: var(--page-pad);
+  padding-top: calc(var(--page-pad) + var(--header-height));
+  background: #000;
+  color: #f7f7f7;
+}
+
+.pixel-playground {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 2vh, 1.5rem);
+  padding-block: clamp(1rem, 3vh, 2rem);
+}
+
+.pixel-playground-intro {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(100%, 760px, 68svh);
+  font-family: "Geist Pixel", monospace;
+}
+
+.pixel-playground-intro h1 {
+  margin: 0;
+  font-family: "Gravelands", Impact, sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+}
+
+.pixel-playground-intro p {
+  margin: 0;
+  max-width: 18rem;
+  color: rgba(247, 247, 247, 0.55);
+  font-size: clamp(0.68rem, 0.85vw, 0.8rem);
+  line-height: 1.4;
+  text-align: right;
+}
+
+.pixel-panel {
+  width: min(100%, 760px, 68svh);
+  padding: clamp(0.75rem, 1.5vw, 1.1rem);
+  border: 1px solid rgba(247, 247, 247, 0.16);
+  border-radius: 0.5rem;
+  background: #0d0d0c;
+}
+
+.pixel-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.65rem;
+  color: rgba(247, 247, 247, 0.5);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pixel-panel-head p {
+  margin: 0;
+}
+
+.pixel-grid {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #1a1a18;
+  touch-action: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.pixel-cell {
+  appearance: none;
+  min-width: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: inset 0 0 0 0.5px rgba(247, 247, 247, 0.08);
+  cursor: crosshair;
+}
+
+.pixel-cell:hover {
+  background-color: rgba(247, 247, 247, 0.06);
+}
+
+.pixel-cell:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid #3a2bff;
+  outline-offset: -2px;
+}
+
+.pixel-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.pixel-palette {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pixel-swatch {
+  appearance: none;
+  width: 1.55rem;
+  height: 1.55rem;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(247, 247, 247, 0.2);
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease;
+}
+
+.pixel-swatch:hover {
+  transform: scale(1.08);
+}
+
+.pixel-swatch[aria-pressed="true"] {
+  outline: 2px solid #f7f7f7;
+  outline-offset: 2px;
+}
+
+.pixel-swatch:focus-visible {
+  outline: 2px solid #f7f7f7;
+  outline-offset: 3px;
+}
+
+.pixel-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.pixel-tool {
+  appearance: none;
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(247, 247, 247, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  color: #f7f7f7;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.pixel-tool:hover,
+.pixel-tool[aria-pressed="true"] {
+  border-color: #f7f7f7;
+  background: #f7f7f7;
+  color: #000;
+}
+
+.pixel-tool:focus-visible {
+  outline: 2px solid #f7f7f7;
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .pixel-playground-intro {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .pixel-playground-intro h1 {
+    font-size: clamp(2rem, 8vw, 2.75rem);
+  }
+
+  .pixel-playground-intro p {
+    max-width: none;
+    text-align: left;
+  }
+
+  .pixel-panel {
+    width: 100%;
+    padding: 0.65rem;
+  }
+
+  .pixel-swatch {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-swatch,
+  .pixel-tool {
+    transition: none;
+  }
+}
+
+/* Collection placeholders — UI Icons, Components, Login */
+.collection-page {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  padding: var(--page-pad);
+  padding-top: calc(var(--page-pad) + var(--header-height));
+  background: #000;
+  color: #f7f7f7;
+}
+
+.collection-empty {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  padding-block: clamp(3rem, 10vh, 8rem);
+  text-align: center;
+}
+
+.collection-kicker {
+  margin: 0;
+  color: rgba(247, 247, 247, 0.5);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.collection-title {
+  margin: 0;
+  font-family: "Gravelands", Impact, sans-serif;
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+}
+
+.collection-note {
+  max-width: 30rem;
+  margin: 0;
+  color: rgba(247, 247, 247, 0.62);
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.82rem, 1vw, 0.95rem);
+  line-height: 1.55;
+}
+
+.collection-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-top: 0.5rem;
+  color: #f7f7f7;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: opacity 160ms ease;
+}
+
+.collection-back:hover,
+.collection-back:focus-visible {
+  opacity: 0.6;
+}
+
+.collection-back:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* Wallpapers — light editorial index */
+.wallpaper-page {
+  min-height: 100svh;
+  padding: var(--page-pad);
+  padding-top: calc(var(--page-pad) + var(--header-height));
+  background: #f7f7f7;
+  color: #0d0d0c;
+}
+
+.wallpaper-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+.wallpaper-kicker {
+  margin: 0 0 0.6rem;
+  color: rgba(0, 0, 0, 0.55);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.wallpaper-title {
+  margin: 0;
+  font-family: "Gravelands", Impact, sans-serif;
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+}
+
+.wallpaper-note {
+  max-width: 22rem;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.55);
+  font-family: "Geist Pixel", monospace;
+  font-size: clamp(0.78rem, 0.9vw, 0.9rem);
+  line-height: 1.5;
+  text-align: right;
+}
+
+.wallpaper-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem) clamp(0.6rem, 1.2vw, 1.1rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.wallpaper-cell {
+  display: flex;
+  min-height: clamp(7rem, 11vw, 10rem);
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+}
+
+.wallpaper-index {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.wallpaper-swatch {
+  display: block;
+  width: 100%;
+  flex: 1;
+  min-height: 3rem;
+  background: #0d0d0c;
+}
+
+.wallpaper-cell:nth-child(3n) .wallpaper-swatch {
+  width: 62%;
+}
+
+.wallpaper-cell:nth-child(4n) .wallpaper-swatch {
+  width: 40%;
+  height: clamp(2.5rem, 4vw, 3.5rem);
+  flex: 0 0 auto;
+}
+
+.wallpaper-cell:nth-child(5n) .wallpaper-swatch {
+  background: repeating-linear-gradient(
+    135deg,
+    #0d0d0c 0 2px,
+    #f7f7f7 2px 5px
+  );
+}
+
+.wallpaper-cell:nth-child(7n) .wallpaper-swatch {
+  background: linear-gradient(135deg, #0d0d0c 0%, #6b6b68 100%);
+}
+
+.wallpaper-label {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 900px) {
+  .wallpaper-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .collection-title {
+    font-size: clamp(2.75rem, 15vw, 5rem);
+  }
+
+  .wallpaper-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .wallpaper-note {
+    max-width: 28rem;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .wallpaper-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
