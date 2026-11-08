@@ -18,6 +18,7 @@ export default function PixelPlaygroundPage() {
       <section
         className="pixel-playground"
         aria-labelledby="pixel-playground-title"
+        data-intro
       >
         <div className="pixel-playground-intro">
           <h1 id="pixel-playground-title">Pixel Playground</h1>
