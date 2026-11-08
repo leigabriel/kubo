@@ -1082,11 +1082,104 @@
 }
 
 .archive-mark {
+  position: relative;
   display: block;
-  width: clamp(9rem, 26vw, 24rem);
-  height: auto;
+  width: clamp(12rem, 30vw, 26rem);
+  height: clamp(12rem, 30vw, 26rem);
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  border: 0;
+  background: transparent;
   color: #f7f7f7;
+  font: inherit;
   transform: rotate(-3deg);
+  perspective: 1200px;
+  cursor: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.archive-disc {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: filter 0.25s ease;
+  will-change: transform;
+}
+
+.archive-disc-spin {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: archive-disc-spin 7s linear infinite;
+  will-change: transform;
+}
+
+@keyframes archive-disc-spin {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.archive-disc model-viewer {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+  --poster-color: transparent;
+}
+
+.archive-mark:hover .archive-disc,
+.archive-mark:focus-visible .archive-disc {
+  filter:
+    drop-shadow(-4px 0 0 rgba(255, 0, 80, 0.55))
+    drop-shadow(4px 0 0 rgba(0, 200, 255, 0.55));
+}
+
+.archive-mark:focus-visible {
+  outline: 1px solid rgba(247, 247, 247, 0.55);
+  outline-offset: 8px;
+}
+
+.archive-disc-cursor {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: #f7f7f7;
+  color: #000;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(1rem, 1rem);
+  transition:
+    opacity 140ms ease,
+    visibility 140ms ease;
+}
+
+.archive-mark:hover + .archive-disc-cursor,
+.archive-mark:focus-visible + .archive-disc-cursor {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (hover: none) {
+  .archive-disc-cursor {
+    display: none;
+  }
 }
 
 .archive-lede {
@@ -1462,7 +1555,8 @@
   }
 
   .archive-mark {
-    width: clamp(8rem, 28vw, 16rem);
+    width: clamp(10rem, 32vw, 20rem);
+    height: clamp(10rem, 32vw, 20rem);
   }
 }
 
@@ -1473,7 +1567,8 @@
   }
 
   .archive-mark {
-    width: clamp(7rem, 32vw, 11rem);
+    width: clamp(9rem, 42vw, 15rem);
+    height: clamp(9rem, 42vw, 15rem);
   }
 
   .archive-lede {
