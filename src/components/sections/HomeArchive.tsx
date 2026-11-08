@@ -1,5 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
+import gsap from "gsap";
 import { PixelMark } from "@/components/visual/PixelMark";
+import { loadModelViewer } from "@/lib/model-viewer";
+import { getModelUrl } from "@/lib/storage";
+
+const discModel = getModelUrl("kubo_objects_disc.glb");
+const discMusic = getModelUrl("kubo-archive-music-disc.mp3");
 
 type VisualKind = "object" | "type" | "index" | "motion";
 
@@ -156,6 +165,80 @@ function ArchiveVisual({
 }
 
 export function HomeArchive() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const viewerRef = useRef<HTMLElement>(null);
+  const cursorRef = useRef<HTMLSpanElement>(null);
+  const orbitTween = useRef<gsap.core.Tween | null>(null);
+  const orbitRef = useRef({ theta: 0 });
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    loadModelViewer().catch((error) => {
+      console.error("Model viewer failed to load", error);
+    });
+  }, []);
+
+  useEffect(() => {
+    const audio = new Audio(discMusic);
+    audio.loop = true;
+    audio.volume = 0.8;
+    audio.preload = "none";
+    audioRef.current = audio;
+
+    return () => {
+      audio.pause();
+      audio.src = "";
+      audioRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      orbitTween.current?.kill();
+    };
+  }, []);
+
+  function toggleMusic() {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      void audio
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
+    } else {
+      audio.pause();
+      setIsPlaying(false);
+    }
+  }
+
+  function setDiscSide(flipped: boolean) {
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+
+    orbitTween.current?.kill();
+    orbitTween.current = gsap.to(orbitRef.current, {
+      theta: flipped ? 180 : 0,
+      duration: 0.8,
+      ease: "power3.inOut",
+      onUpdate: () => {
+        viewer.setAttribute(
+          "camera-orbit",
+          `${orbitRef.current.theta}deg 90deg auto`,
+        );
+      },
+    });
+  }
+
+  function handlePointerMove(event: PointerEvent<HTMLButtonElement>) {
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
+    cursor.style.left = `${event.clientX}px`;
+    cursor.style.top = `${event.clientY}px`;
+  }
+
   return (
     <section
       id="archive"
@@ -169,7 +252,41 @@ export function HomeArchive() {
 
       <div className="archive-mark-wrap" data-reveal>
         <p className="archive-kicker">Kubo Archive</p>
-        <PixelMark className="archive-mark" />
+        <button
+          type="button"
+          className="archive-mark archive-disc-wrap"
+          onPointerMove={handlePointerMove}
+          onPointerEnter={() => setDiscSide(true)}
+          onPointerLeave={() => setDiscSide(false)}
+          onFocus={() => setDiscSide(true)}
+          onBlur={() => setDiscSide(false)}
+          onClick={toggleMusic}
+          aria-pressed={isPlaying}
+          aria-label={
+            isPlaying
+              ? "Pause archive disc music"
+              : "Play archive disc music"
+          }
+        >
+          <span className="archive-disc">
+            <span className="archive-disc-spin">
+              <model-viewer
+                ref={viewerRef}
+                src={discModel}
+                alt=""
+                camera-orbit="0deg 90deg auto"
+                interaction-prompt="none"
+                shadow-intensity="0.7"
+                shadow-softness="1"
+                exposure="1.05"
+                loading="eager"
+              />
+            </span>
+          </span>
+        </button>
+        <span ref={cursorRef} className="archive-disc-cursor" aria-hidden="true">
+          {isPlaying ? "Pause" : "Play"}
+        </span>
       </div>
 
       <p className="archive-lede" data-reveal>
