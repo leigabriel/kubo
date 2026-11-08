@@ -8,6 +8,16 @@
 :root {
   --page-pad: clamp(1.25rem, 2.1vw, 2.5rem);
   --header-height: 4.75rem;
+  --page-gradient: linear-gradient(
+    96deg,
+    rgba(255, 184, 119, 0.14) 0%,
+    rgba(255, 140, 207, 0.14) 16%,
+    rgba(185, 155, 255, 0.14) 32%,
+    rgba(255, 122, 210, 0.14) 48%,
+    rgba(255, 187, 112, 0.14) 64%,
+    rgba(255, 138, 61, 0.14) 80%,
+    rgba(255, 207, 156, 0.14) 100%
+  );
   color-scheme: dark;
   background: #000;
   color: #f7f7f7;
