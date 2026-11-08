@@ -7,7 +7,7 @@ import {
   type PointerEvent,
 } from "react";
 
-const GRID_SIZE = 16;
+const GRID_SIZE = 24;
 const CELL_COUNT = GRID_SIZE * GRID_SIZE;
 
 const COLORS = [
@@ -131,7 +131,9 @@ export function PixelGrid({ describedBy }: { describedBy?: string }) {
     <div className="pixel-panel">
       <div className="pixel-panel-head">
         <p>Canvas</p>
-        <p>16 × 16</p>
+        <p>
+          {GRID_SIZE} × {GRID_SIZE}
+        </p>
       </div>
 
       <div
@@ -140,6 +142,7 @@ export function PixelGrid({ describedBy }: { describedBy?: string }) {
         role="group"
         aria-label="Pixel art grid"
         aria-describedby={describedBy}
+        style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)` }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerEnd}
