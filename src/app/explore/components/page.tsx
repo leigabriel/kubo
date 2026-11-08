@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
+import { DiscSleeve } from "@/components/explore/DiscSleeve";
 import { PageMotion } from "@/components/motion/PageMotion";
 
 export const metadata: Metadata = {
@@ -14,22 +16,26 @@ export default function ComponentsPage() {
       <SiteHeader />
       <PageMotion />
 
-      <section
-        className="collection-empty"
-        aria-labelledby="components-title"
-        data-intro
-      >
+      <div className="component-page-head">
         <p className="collection-kicker">Explore / Components</p>
-        <h1 className="collection-title" id="components-title">
+        <h1 className="collection-title" id="components-title" data-intro>
           Components
         </h1>
         <p className="collection-note">
-          Nothing to see here — yet. Components are still being assembled.
+          Ship-ready interface pieces from the archive. First up — the Kubo
+          Disc Sleeve in React, Vue, Angular, Svelte, and plain HTML.
         </p>
+      </div>
+
+      <DiscSleeve />
+
+      <p className="component-backline" data-intro>
         <Link className="collection-back" href="/explore">
           Back to all assets <span aria-hidden="true">↗</span>
         </Link>
-      </section>
+      </p>
+
+      <SiteFooter />
     </main>
   );
 }
