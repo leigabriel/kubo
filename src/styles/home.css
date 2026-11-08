@@ -787,7 +787,6 @@
   opacity: 0;
   pointer-events: none;
   transform-origin: 50% 50%;
-  will-change: transform, opacity;
   transition: opacity 220ms ease;
 }
 
@@ -803,7 +802,6 @@
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  will-change: transform;
 }
 
 .home-model-tilt model-viewer {
@@ -933,7 +931,7 @@
   gap: clamp(0.5rem, 1vw, 1.25rem);
   color: #000;
   font-family: "Gravelands", Impact, sans-serif;
-  font-size: clamp(4rem, 9.5vw, 11.4rem);
+  font-size: clamp(3.8rem, 8.6vw, 10.2rem);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 0.8;
@@ -960,18 +958,18 @@
 
 .signature-stage {
   position: relative;
-  width: clamp(190px, 18vw, 340px);
+  width: clamp(280px, 27vw, 510px);
   aspect-ratio: 1;
 }
 
 /* Tablet */
 @media (min-width: 701px) and (max-width: 1024px) {
   .signature-word {
-    font-size: clamp(3.4rem, 8.2vw, 7.5rem);
+    font-size: clamp(3.2rem, 7.4vw, 6.8rem);
   }
 
   .signature-stage {
-    width: clamp(180px, 20vw, 260px);
+    width: clamp(260px, 30vw, 390px);
   }
 
   .signature-meta {
@@ -994,6 +992,7 @@
   .signature-main {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
     gap: clamp(0.75rem, 3vw, 1.5rem);
   }
@@ -1004,7 +1003,13 @@
   }
 
   .signature-stage {
-    width: min(68vw, 300px);
+    width: min(84vw, 400px);
+    align-self: center;
+  }
+
+  .hero-model-anchor {
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .hero-title {
@@ -1037,21 +1042,18 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
+  background-color: #000;
+  background-image:
     radial-gradient(
-      38% 32% at 50% 16%,
-      rgba(255, 140, 207, 0.18),
-      transparent 72%
+      70% 28% at 50% 0%,
+      rgba(255, 140, 207, 0.1),
+      transparent 70%
     ),
-    radial-gradient(
-      32% 30% at 10% 56%,
-      rgba(255, 154, 77, 0.13),
-      transparent 72%
-    ),
-    radial-gradient(
-      36% 34% at 90% 60%,
-      rgba(185, 155, 255, 0.16),
-      transparent 72%
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(255, 154, 77, 0.05) 55%,
+      transparent 100%
     );
   pointer-events: none;
 }
@@ -1105,7 +1107,6 @@
   height: 100%;
   transform-style: preserve-3d;
   transition: filter 0.25s ease;
-  will-change: transform;
 }
 
 .archive-disc-spin {
@@ -1113,7 +1114,6 @@
   width: 100%;
   height: 100%;
   animation: archive-disc-spin 7s linear infinite;
-  will-change: transform;
 }
 
 @keyframes archive-disc-spin {
