@@ -51,6 +51,44 @@ const archiveEntries: ArchiveEntry[] = [
   },
 ];
 
+const asciiArt: Record<VisualKind, string> = {
+  object: String.raw`        +-------------+
+       /             /|
+      /             / |
+     +-------------+  |
+     |             |  |
+     |             |  |
+     |             |  +
+     |             | /
+     |             |/
+     +-------------+`,
+  type: String.raw`       #           ##
+      # #         #  #
+     #   #        #  #
+    #######       ####
+    #     #       #  #
+    #     #       #  #
+    #     #       #  #`,
+  index: String.raw`    +----+----+----+----+
+    | 01 | 02 | 03 | 04 |
+    +----+----+----+----+
+    | 05 | 06 | 07 | 08 |
+    +----+----+----+----+
+    | 09 | 10 | 11 | 12 |
+    +----+----+----+----+
+    | 13 | 14 | 15 | 16 |
+    +----+----+----+----+`,
+  motion: String.raw`          .-'''-.
+       .-'       '-.
+     .'    .---.    '.
+    /     /  @  \     /
+   |     |       |     |
+    \     \     /     /
+     '.    '---'    .'
+       '-.       .-'
+          '-...-'`,
+};
+
 function CubeArt() {
   return (
     <svg
@@ -110,13 +148,21 @@ function ArchiveVisual({
         </>
       )}
       {kind === "motion" && <OrbitArt />}
+      <span className="archive-card-ascii">
+        <pre>{asciiArt[kind]}</pre>
+      </span>
     </span>
   );
 }
 
 export function HomeArchive() {
   return (
-    <section className="home-archive" aria-labelledby="archive-heading">
+    <section
+      id="archive"
+      className="home-archive"
+      data-home-section="archive"
+      aria-labelledby="archive-heading"
+    >
       <h2 className="sr-only" id="archive-heading">
         Kubo Archive
       </h2>
