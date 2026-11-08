@@ -1,7 +1,6 @@
 "use client";
 
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
-import { useLenis } from "lenis/react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import {
@@ -49,11 +48,13 @@ export function AssetGrid() {
   const [selected, setSelected] = useState<Asset | null>(null);
   const [previewId, setPreviewId] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
+  const [fullView, setFullView] = useState(false);
+  const [autoRotate, setAutoRotate] = useState(true);
+  const [viewerKey, setViewerKey] = useState(0);
   const closeRef = useRef<HTMLButtonElement>(null);
   const collectionRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<number | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
-  const lenis = useLenis();
 
   useEffect(() => {
     loadModelViewer().catch((error) => {
@@ -122,6 +123,9 @@ export function AssetGrid() {
     }
 
     setIsClosing(false);
+    setFullView(false);
+    setAutoRotate(true);
+    setViewerKey(0);
     setSelected(asset);
   }, []);
 
@@ -152,13 +156,11 @@ export function AssetGrid() {
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
-    lenis?.stop();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
-      lenis?.start();
     };
-  }, [selected, close, lenis]);
+  }, [selected, close]);
 
   useEffect(() => {
     if (!selected && triggerRef.current) {
@@ -313,7 +315,7 @@ export function AssetGrid() {
           onClick={close}
         >
           <div
-            className="asset-modal"
+            className={`asset-modal${isClosing ? " is-closing" : ""}${fullView ? " is-fullview" : ""}`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="asset-modal-title"
@@ -332,15 +334,17 @@ export function AssetGrid() {
 
             <div className="asset-modal-viewer">
               <model-viewer
+                key={viewerKey}
                 src={getAssetUrl(selected)}
                 alt={selected.title}
                 camera-orbit="20deg 75deg auto"
                 camera-controls="camera-controls"
-                auto-rotate
+                auto-rotate={autoRotate ? "" : undefined}
                 auto-rotate-delay="0"
                 rotation-per-second="28deg"
                 interaction-prompt="auto"
                 shadow-intensity="0.8"
+                shadow-softness="1"
                 exposure="1.05"
               />
             </div>
@@ -366,6 +370,33 @@ export function AssetGrid() {
               </dl>
 
               <div className="asset-modal-actions">
+                {fullView ? (
+                  <>
+                    <button
+                      type="button"
+                      className="asset-tool"
+                      onClick={() => setViewerKey((key) => key + 1)}
+                    >
+                      Reset view
+                    </button>
+                    <button
+                      type="button"
+                      className="asset-tool"
+                      aria-pressed={autoRotate}
+                      onClick={() => setAutoRotate((value) => !value)}
+                    >
+                      Auto-rotate
+                    </button>
+                  </>
+                ) : null}
+                <button
+                  type="button"
+                  className="asset-tool"
+                  aria-pressed={fullView}
+                  onClick={() => setFullView((value) => !value)}
+                >
+                  {fullView ? "Exit full view" : "Full view"}
+                </button>
                 <a
                   className="asset-download"
                   href={getAssetDownloadUrl(selected)}
