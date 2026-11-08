@@ -5,6 +5,10 @@ import dynamic from "next/dynamic";
 const TechText = dynamic(() => import("./TechText"), { ssr: false });
 
 export function HomeHero() {
+  const cores =
+    typeof navigator !== "undefined" ? navigator.hardwareConcurrency : 8;
+  const lowEnd = cores <= 4;
+
   return (
     <section
       className="home-hero"
@@ -21,23 +25,24 @@ export function HomeHero() {
           text="KUBO"
           fontFamily="'Gravelands', 'Impact', sans-serif"
           fontWeight={400}
-          fontSize={3000}
+          fontSize={2000}
           letterSpacing={0.03}
           color="#f7f7f7"
           accentColor="#f7f7f7"
           align="center"
-          reach={320}
+          reach={lowEnd ? 200 : 260}
           softness={0.7}
           dashLength={4}
           dashGap={2}
           strokeWidth={1.5}
           reveal="letter"
-          specks={15}
+          specks={lowEnd ? 6 : 10}
           selection
           labels={false}
-          draggable
+          draggable={!lowEnd}
           bounce={0.4}
-          clickKick
+          clickKick={!lowEnd}
+          sweep={!lowEnd}
           intro="none"
           introDuration={2}
           guides={false}
