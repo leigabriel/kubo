@@ -65,8 +65,10 @@ export function HomeSignature() {
   return (
     <section
       ref={sectionRef}
+      id="signature"
       className="home-signature"
       data-header-theme="light"
+      data-home-section="signature"
       aria-labelledby="signature-title"
     >
       <h2 className="sr-only" id="signature-title">
