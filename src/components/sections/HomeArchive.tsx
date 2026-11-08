@@ -279,7 +279,7 @@ export function HomeArchive() {
                 shadow-intensity="0.7"
                 shadow-softness="1"
                 exposure="1.05"
-                loading="eager"
+                loading="lazy"
               />
             </span>
           </span>
