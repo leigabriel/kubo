@@ -9,7 +9,7 @@ import { getModelUrl } from "@/lib/storage";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const signatureModel = getModelUrl("kubo-archive-box.optimized.glb");
+const signatureModel = getModelUrl("kuboarchive-signature.glb");
 
 export function HomeModel() {
   const layerRef = useRef<HTMLDivElement>(null);
