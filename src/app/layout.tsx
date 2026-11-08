@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "lenis/dist/lenis.css";
 import "@/styles/globals.css";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { PageTransition } from "@/components/motion/PageTransition";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -24,7 +25,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
       <body>
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          <PageTransition />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
