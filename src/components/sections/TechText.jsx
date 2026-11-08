@@ -8,6 +8,10 @@ const SPRING = 320;
 const INHERIT = /^(currentcolor|inherit)$/i;
 const INTRO_DELAY = 0.15;
 const KICK_DECAY = 0.62;
+// Horizontal breathing room so the glyph ink, its dashed outline stroke, and the selection frame
+// (drawn ~8px outside the glyph box) are not clipped by the canvas edges.
+const EDGE_INSET_MIN = 12;
+const EDGE_INSET_RATIO = 0.01;
 // Firefox caps canvas glyph metrics once the font size exceeds ~2000px, so measure at a safe
 // reference size and scale the metrics linearly instead of measuring at huge font sizes.
 const MAX_MEASURE_SIZE = 1000;
@@ -239,15 +243,17 @@ const TechText = ({
       };
 
       let m = measure(s.fontSize, s.text);
+      const margin = width * 0.05;
+      const inset = Math.max(EDGE_INSET_MIN, width * EDGE_INSET_RATIO);
+      const available = s.align === 'center' ? width - inset * 2 : width - margin - inset;
       const fit = Math.min(
         1,
-        (width * 1.0) / Math.max(m.actualBoundingBoxLeft + m.actualBoundingBoxRight, 1),
+        Math.max(1, available) / Math.max(m.actualBoundingBoxLeft + m.actualBoundingBoxRight, 1),
         (height * 0.98) / Math.max(m.actualBoundingBoxAscent + m.actualBoundingBoxDescent, 1)
       );
       const size = s.fontSize * fit;
       m = measure(size, s.text);
       const inkWidth = m.actualBoundingBoxLeft + m.actualBoundingBoxRight;
-      const margin = width * 0.05;
       const start =
         s.align === 'left' ? margin : s.align === 'right' ? width - margin - inkWidth : (width - inkWidth) / 2;
       const x = start + m.actualBoundingBoxLeft;
