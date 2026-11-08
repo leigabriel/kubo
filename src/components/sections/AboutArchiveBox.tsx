@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { loadModelViewer } from "@/lib/model-viewer";
 import { getModelUrl } from "@/lib/storage";
 
-const archiveBoxModel = getModelUrl("kubo-archive-box.optimized.glb");
+const archiveBoxModel = getModelUrl("kuboarchive-signature.glb");
 
 export function AboutArchiveBox() {
   const archiveBoxRef = useRef<HTMLButtonElement>(null);
