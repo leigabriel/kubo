@@ -4,7 +4,8 @@
   flex-direction: column;
   padding: var(--page-pad);
   padding-top: calc(var(--page-pad) + var(--header-height));
-  background: #000;
+  background-color: #000;
+  background-image: var(--page-gradient);
   color: #f7f7f7;
 }
 
@@ -91,6 +92,7 @@
   border-radius: 0;
   overflow: hidden;
   position: relative;
+  contain: layout paint;
 }
 
 .asset-thumb model-viewer {
@@ -701,7 +703,8 @@
   flex-direction: column;
   padding: var(--page-pad);
   padding-top: calc(var(--page-pad) + var(--header-height));
-  background: #000;
+  background-color: #000;
+  background-image: var(--page-gradient);
   color: #f7f7f7;
 }
 
@@ -720,7 +723,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  width: min(100%, 760px, 68svh);
+  width: min(100%, 880px, 78svh);
   font-family: "Geist Pixel", monospace;
 }
 
@@ -742,12 +745,96 @@
   text-align: right;
 }
 
+.pixel-studio {
+  position: relative;
+  width: min(100%, 1080px, 92svh);
+  margin-inline: auto;
+}
+
 .pixel-panel {
+  position: relative;
   width: min(100%, 760px, 68svh);
+  margin-inline: auto;
   padding: clamp(0.75rem, 1.5vw, 1.1rem);
   border: 1px solid rgba(247, 247, 247, 0.16);
   border-radius: 0.5rem;
   background: #0d0d0c;
+}
+
+.pixel-window {
+  position: fixed;
+  top: 18vh;
+  right: 24px;
+  left: auto;
+  z-index: 80;
+  display: flex;
+  width: min(420px, calc(100vw - 2rem));
+  max-height: min(78svh, 700px);
+  flex-direction: column;
+  border: 1px solid rgba(247, 247, 247, 0.2);
+  border-radius: 0.6rem;
+  background: #141413;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.pixel-window-bar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid rgba(247, 247, 247, 0.14);
+  background: #0d0d0c;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.pixel-window-bar:active {
+  cursor: grabbing;
+}
+
+.pixel-window-title {
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pixel-window-actions {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.pixel-window-btn {
+  min-height: 1.75rem;
+  padding: 0.25rem 0.45rem;
+}
+
+.pixel-window-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.85rem;
+}
+
+.pixel-window-body .pixel-controls {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.6rem;
+  margin-top: 0;
+}
+
+.pixel-tools-toggle {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 20;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 .pixel-panel-head {
@@ -880,6 +967,130 @@
   outline-offset: 3px;
 }
 
+.pixel-tool:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.pixel-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.pixel-tool-sep {
+  width: 1px;
+  height: 1.25rem;
+  margin-inline: 0.25rem;
+  background: rgba(247, 247, 247, 0.18);
+}
+
+.pixel-grid.is-grid-off .pixel-cell {
+  box-shadow: none;
+}
+
+.pixel-controls-top {
+  align-items: flex-start;
+}
+
+.pixel-export {
+  align-items: flex-start;
+}
+
+.pixel-field,
+.pixel-bg,
+.pixel-size {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pixel-field-label {
+  color: rgba(247, 247, 247, 0.5);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pixel-field label {
+  color: rgba(247, 247, 247, 0.5);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pixel-field select,
+.pixel-size-custom input,
+.pixel-custom input[type="text"] {
+  min-height: 2rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid rgba(247, 247, 247, 0.2);
+  border-radius: 0.25rem;
+  background: #141413;
+  color: #f7f7f7;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.7rem;
+}
+
+.pixel-field select:focus-visible,
+.pixel-size-custom input:focus-visible,
+.pixel-custom input:focus-visible {
+  outline: 2px solid #f7f7f7;
+  outline-offset: 2px;
+}
+
+.pixel-custom {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pixel-custom input[type="color"] {
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  border: 1px solid rgba(247, 247, 247, 0.2);
+  border-radius: 0.25rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pixel-size-presets,
+.pixel-size-custom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pixel-size-custom label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: rgba(247, 247, 247, 0.5);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pixel-size-custom input {
+  width: 3.6rem;
+}
+
+.pixel-status {
+  margin: 0.85rem 0 0;
+  color: rgba(247, 247, 247, 0.5);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 @media (max-width: 700px) {
   .pixel-playground-intro {
     flex-direction: column;
@@ -921,7 +1132,8 @@
   flex-direction: column;
   padding: var(--page-pad);
   padding-top: calc(var(--page-pad) + var(--header-height));
-  background: #000;
+  background-color: #000;
+  background-image: var(--page-gradient);
   color: #f7f7f7;
 }
 
@@ -986,12 +1198,201 @@
   outline-offset: 4px;
 }
 
+/* Components — first component: Kubo Disc Sleeve */
+.component-page-head {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.5vw, 1.1rem);
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+.component-backline {
+  margin: clamp(2.5rem, 6vh, 4rem) 0 0;
+}
+
+.disc-sleeve {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.disc-preview {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(247, 247, 247, 0.16);
+  border-radius: 0.5rem;
+  background: #0d0d0c;
+  contain: layout paint;
+}
+
+.disc-preview model-viewer {
+  display: block;
+  width: 100%;
+  height: min(560px, 62svh);
+  background: transparent;
+  --poster-color: transparent;
+}
+
+.disc-preview-note {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(247, 247, 247, 0.14);
+  color: rgba(247, 247, 247, 0.55);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.disc-panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.disc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.disc-tabs button {
+  appearance: none;
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(247, 247, 247, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  color: #f7f7f7;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.disc-tabs button:hover,
+.disc-tabs button[aria-pressed="true"] {
+  border-color: #f7f7f7;
+  background: #f7f7f7;
+  color: #000;
+}
+
+.disc-tabs button:focus-visible {
+  outline: 2px solid #f7f7f7;
+  outline-offset: 3px;
+}
+
+.disc-code {
+  overflow: hidden;
+  border: 1px solid rgba(247, 247, 247, 0.16);
+  border-radius: 0.5rem;
+  background: #0d0d0c;
+}
+
+.disc-code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid rgba(247, 247, 247, 0.14);
+  color: rgba(247, 247, 247, 0.55);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.disc-code pre {
+  max-height: 320px;
+  overflow: auto;
+  margin: 0;
+  padding: 0.9rem;
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  white-space: pre;
+}
+
+.disc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.disc-actions button,
+.disc-actions a {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.2rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid rgba(247, 247, 247, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  color: #f7f7f7;
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.disc-actions button:hover:not(:disabled),
+.disc-actions a:hover {
+  border-color: #f7f7f7;
+  background: #f7f7f7;
+  color: #000;
+}
+
+.disc-actions button:focus-visible,
+.disc-actions a:focus-visible {
+  outline: 2px solid #f7f7f7;
+  outline-offset: 3px;
+}
+
+.disc-actions button:disabled {
+  cursor: wait;
+  opacity: 0.5;
+}
+
+.disc-status {
+  margin: 0;
+  color: rgba(247, 247, 247, 0.5);
+  font-family: "Geist Pixel", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .disc-sleeve {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disc-tabs button,
+  .disc-actions button,
+  .disc-actions a {
+    transition: none;
+  }
+}
+
 /* Wallpapers — light editorial index */
 .wallpaper-page {
   min-height: 100svh;
   padding: var(--page-pad);
   padding-top: calc(var(--page-pad) + var(--header-height));
-  background: #f7f7f7;
+  background-color: #f7f7f7;
+  background-image: var(--page-gradient);
   color: #0d0d0c;
 }
 
