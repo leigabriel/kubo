@@ -4,7 +4,8 @@
   flex-direction: column;
   padding: var(--page-pad);
   padding-top: calc(var(--page-pad) + var(--header-height));
-  background: #000;
+  background-color: #000;
+  background-image: var(--page-gradient);
   color: #f7f7f7;
   overflow-x: clip;
   container-type: inline-size;
@@ -279,6 +280,49 @@
 .about-archive-box-restore:focus-visible {
   outline: 2px solid #f7f7f7;
   outline-offset: 3px;
+}
+
+/* Tablet, laptop, and desktop — larger reading text */
+@media (min-width: 701px) {
+  .about-kicker {
+    font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  }
+
+  .about-hero-sub {
+    font-size: clamp(1.05rem, 1.3vw, 1.3rem);
+  }
+
+  .about-col {
+    font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  }
+
+  .about-col p:first-child {
+    font-size: clamp(1rem, 1.25vw, 1.25rem);
+  }
+
+  .about-col-label {
+    font-size: clamp(0.88rem, 1.05vw, 1.05rem);
+  }
+
+  .about-section-label {
+    font-size: clamp(1.05rem, 1.3vw, 1.35rem);
+  }
+
+  .about-capabilities {
+    font-size: clamp(2.4rem, 5.6vw, 5.6rem);
+  }
+
+  .about-note {
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  }
+
+  .about-value h3 {
+    font-size: clamp(1rem, 1.15vw, 1.15rem);
+  }
+
+  .about-value p {
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  }
 }
 
 /* Tablet */
