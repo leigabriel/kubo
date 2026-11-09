@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef } from "react";
+import type { CSSProperties, Key, Ref } from "react";
 
 type ModelViewerProps = {
   src?: string;
@@ -6,7 +6,7 @@ type ModelViewerProps = {
   "camera-orbit"?: string;
   "camera-target"?: string;
   "field-of-view"?: string;
-  "camera-controls"?: boolean | "";
+  "camera-controls"?: boolean | "" | "camera-controls";
   "disable-zoom"?: boolean | "";
   "auto-rotate"?: boolean | "";
   "auto-rotate-delay"?: string | number;
@@ -21,7 +21,12 @@ type ModelViewerProps = {
   loading?: "auto" | "lazy" | "eager";
   reveal?: "auto" | "manual";
   poster?: string;
-} & ComponentPropsWithoutRef<"model-viewer">;
+  key?: Key | null;
+  id?: string;
+  className?: string;
+  style?: CSSProperties;
+  ref?: Ref<HTMLElement>;
+};
 
 declare module "react" {
   namespace JSX {
