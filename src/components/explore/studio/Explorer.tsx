@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, type KeyboardEvent } from "react";
-import { ChevronIcon, FileIcon } from "./icons";
+import { FileIcon, FolderIcon } from "./icons";
 import { getFile, type StudioFileId, type TreeNode } from "./files";
 
 type Row = {
@@ -126,7 +126,7 @@ export function Explorer({
         return (
           <div
             key={row.key}
-            className={`vs-row${isActive ? " is-active" : ""}`}
+            className={`vs-row${isActive ? " is-active" : ""}${isFolder ? " is-folder" : ""}`}
             role="treeitem"
             aria-level={depth + 1}
             aria-selected={isActive}
@@ -152,7 +152,7 @@ export function Explorer({
             ))}
             {isFolder ? (
               <>
-                <ChevronIcon open={isOpen} className="vs-twistie" />
+                <FolderIcon open={isOpen} />
                 <span className="vs-row-label">{node.name}</span>
                 <span className="vs-row-count">{countFiles(node)}</span>
               </>
