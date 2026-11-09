@@ -4,7 +4,7 @@
   flex-direction: column;
   padding: var(--page-pad);
   padding-top: calc(var(--page-pad) + var(--header-height));
-  background-color: #000;
+  background-color: #232323;
   background-image: var(--page-gradient);
   color: #f7f7f7;
   overflow-x: clip;
@@ -125,7 +125,7 @@
   margin-top: clamp(1.25rem, 3vw, 2.5rem);
   max-width: 22rem;
   background: #f7f7f7;
-  color: #000;
+  color: #232323;
   padding: 0.9rem 1rem 1rem;
   font-family: "Geist Pixel", monospace;
   font-size: clamp(0.72rem, 0.95vw, 0.85rem);
@@ -220,7 +220,7 @@
   padding: 0.55rem 0.7rem;
   border: 1px solid rgba(0, 0, 0, 0.14);
   background: #f7f7f7;
-  color: #000;
+  color: #232323;
   font-family: "Geist Pixel", monospace;
   font-size: 0.62rem;
   letter-spacing: 0.06em;
@@ -258,7 +258,7 @@
   max-width: calc(100vw - (var(--page-pad) * 2));
   padding: 0.6rem 0.75rem;
   border: 1px solid rgba(247, 247, 247, 0.2);
-  background: #000;
+  background: #232323;
   color: #f7f7f7;
   font-family: "Geist Pixel", monospace;
   font-size: 0.62rem;
