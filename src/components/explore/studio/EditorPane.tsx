@@ -21,6 +21,7 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
 } from "./icons";
+import { ModelPreview } from "./ModelPreview";
 import {
   getBreadcrumbs,
   getFile,
@@ -632,6 +633,9 @@ type EditorPaneProps = {
   onDownload: () => void;
   onShowPreview: () => void;
   onDownloadModel: () => void;
+  previewOpen: boolean;
+  modelSrc: string;
+  onHidePreview: () => void;
 };
 
 export function EditorPane({
@@ -651,6 +655,9 @@ export function EditorPane({
   onDownload,
   onShowPreview,
   onDownloadModel,
+  previewOpen,
+  modelSrc,
+  onHidePreview,
 }: EditorPaneProps) {
   const file = activeId ? getFile(activeId) : null;
   const content = useMemo(() => (activeId ? getFileText(activeId) : ""), [activeId]);
@@ -747,7 +754,13 @@ export function EditorPane({
       ) : null}
 
       <div className="vs-editor-body">
-        {file && !file.binary ? (
+        {previewOpen ? (
+          <ModelPreview
+            src={modelSrc}
+            onDownload={onDownloadModel}
+            onClose={onHidePreview}
+          />
+        ) : file && !file.binary ? (
           <>
             {findOpen ? (
               <FindWidget
