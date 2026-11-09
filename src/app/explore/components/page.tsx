@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DiscSleeve } from "@/components/explore/DiscSleeve";
+import { ComponentsStudio } from "@/components/explore/studio/ComponentsStudio";
 
 export const metadata: Metadata = {
   title: "Components — Kubo",
@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 
 export default function ComponentsPage() {
   return (
-    <main className="components-studio-page" id="components">
+    <main className="studio-page" id="components">
       <h1 className="sr-only" id="components-title">
         Components
       </h1>
-      <DiscSleeve />
+      <ComponentsStudio />
     </main>
   );
 }
