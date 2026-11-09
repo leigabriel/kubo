@@ -45,7 +45,7 @@
       transparent 72%
     );
   color-scheme: dark;
-  background: #000;
+  background: #232323;
   color: #f7f7f7;
   font-family: "Geist Pixel", monospace;
   font-synthesis: none;
@@ -75,7 +75,7 @@
 html {
   min-width: 320px;
   min-height: 100%;
-  background: #000;
+  background: #232323;
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-height);
   overflow-x: clip;
@@ -98,7 +98,7 @@ a {
 }
 
 ::selection {
-  color: #000;
+  color: #232323;
   background: #f7f7f7;
 }
 
@@ -106,7 +106,7 @@ a {
   position: fixed;
   inset: 0;
   z-index: 85;
-  background: #000;
+  background: #232323;
   pointer-events: none;
 }
 
