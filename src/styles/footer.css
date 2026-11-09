@@ -11,7 +11,7 @@
   padding: calc(var(--header-height) + clamp(1.25rem, 3vh, 2.5rem))
     var(--page-pad) clamp(1.1rem, 2.2vh, 1.75rem);
   background: #f7f7f7;
-  color: #0d0d0c;
+  color: #232323;
   container-type: inline-size;
   overflow: clip;
 }
@@ -48,7 +48,7 @@
 
 .site-footer-column a {
   display: inline-block;
-  color: #0d0d0c;
+  color: #232323;
   font-family: "Geist Pixel", monospace;
   font-size: clamp(0.82rem, 1.05vw, 1rem);
   line-height: 1.4;
@@ -113,16 +113,16 @@
     to bottom,
     transparent 30%,
     rgba(0, 0, 0, 0.35) 44%,
-    #000 60%,
-    #000 78%,
+    #232323 60%,
+    #232323 78%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 30%,
     rgba(0, 0, 0, 0.35) 44%,
-    #000 60%,
-    #000 78%,
+    #232323 60%,
+    #232323 78%,
     transparent 100%
   );
   filter: blur(clamp(0.3rem, 0.6cqw, 0.6rem)) saturate(1.2);
@@ -146,16 +146,16 @@
     to bottom,
     transparent 40%,
     rgba(0, 0, 0, 0.4) 55%,
-    #000 74%,
-    #000 86%,
+    #232323 74%,
+    #232323 86%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 40%,
     rgba(0, 0, 0, 0.4) 55%,
-    #000 74%,
-    #000 86%,
+    #232323 74%,
+    #232323 86%,
     transparent 100%
   );
   filter: blur(clamp(0.5rem, 1.2cqw, 1.2rem)) saturate(1.05);
@@ -166,7 +166,7 @@
 .site-footer-word {
   position: relative;
   z-index: 1;
-  color: #0d0d0c;
+  color: #232323;
 }
 
 .site-footer-meta {
