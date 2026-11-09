@@ -12,7 +12,6 @@ import { DISC_MODEL_FILENAME, frameworks, getAiPrompt, getReadme, snippets } fro
 import { getDownloadUrl } from "@/lib/storage";
 import { Explorer } from "./Explorer";
 import { EditorPane, type Cursor } from "./EditorPane";
-import { ModelPreview } from "./ModelPreview";
 import { QuickOpen, type StudioCommand } from "./QuickOpen";
 import { Splitter } from "./Splitter";
 import { Terminal, type TerminalActions } from "./Terminal";
@@ -27,7 +26,6 @@ import {
   GlobeIcon,
   PanelIcon,
   SearchIcon,
-  SecondaryIcon,
   SidebarIcon,
   SparkleIcon,
   TerminalIcon,
@@ -48,7 +46,6 @@ import { copyToClipboard, downloadBlob, downloadText, downloadUrl } from "./down
 import { createZip } from "./zip";
 
 const DEFAULT_SIDEBAR = 260;
-const DEFAULT_PREVIEW = 340;
 const DEFAULT_PANEL = 200;
 const DEFAULT_FOLDERS = ["components", "components/disc-sleeve"];
 const STATUS_IDLE = "Ready";
@@ -96,7 +93,6 @@ export function ComponentsStudio() {
   const panelOpen = panelPref ?? !isMobile;
 
   const [sidebarW, setSidebarW] = useState(DEFAULT_SIDEBAR);
-  const [previewW, setPreviewW] = useState(DEFAULT_PREVIEW);
   const [panelH, setPanelH] = useState(DEFAULT_PANEL);
 
   const [wrap, setWrap] = useState(false);
@@ -325,7 +321,6 @@ export function ComponentsStudio() {
       style={
         {
           "--sidebar-w": `${sidebarW}px`,
-          "--preview-w": `${previewW}px`,
           "--panel-h": `${panelH}px`,
         } as React.CSSProperties
       }
@@ -372,11 +367,11 @@ export function ComponentsStudio() {
             type="button"
             className="vs-icon-btn"
             aria-pressed={previewOpen}
-            aria-label="Toggle 3D preview"
-            title="Toggle 3D preview"
+            aria-label="Toggle 3D preview in editor"
+            title="Toggle 3D preview in editor"
             onClick={togglePreview}
           >
-            <SecondaryIcon filled={previewOpen} />
+            <CubeIcon />
           </button>
           <Link
             href="/"
@@ -439,7 +434,7 @@ export function ComponentsStudio() {
                 <h2 className="vs-pane-title">Explorer</h2>
               </div>
 
-              <div className="vs-section">
+              <div className="vs-section vs-section--explorer">
                 <div className="vs-section-head">
                   <button
                     type="button"
@@ -556,6 +551,9 @@ export function ComponentsStudio() {
               }}
               onShowPreview={() => setPreviewPref(true)}
               onDownloadModel={() => actions.downloadGlb()}
+              previewOpen={previewOpen}
+              modelSrc={DISC_MODEL_URL}
+              onHidePreview={() => setPreviewPref(false)}
             />
           </div>
 
@@ -578,30 +576,6 @@ export function ComponentsStudio() {
             onClose={() => setPanelPref(false)}
           />
         </div>
-
-        {previewOpen ? (
-          <>
-            {!isMobile ? (
-              <Splitter
-                orientation="vertical"
-                label="Resize preview"
-                value={previewW}
-                min={240}
-                max={640}
-                invert
-                onChange={setPreviewW}
-                onReset={() => setPreviewW(DEFAULT_PREVIEW)}
-              />
-            ) : null}
-            <aside className="vs-secondary" aria-label="3D preview">
-              <ModelPreview
-                src={DISC_MODEL_URL}
-                onDownload={() => actions.downloadGlb()}
-                onClose={() => setPreviewPref(false)}
-              />
-            </aside>
-          </>
-        ) : null}
       </div>
 
       <footer className="vs-statusbar">
